@@ -19,8 +19,3 @@ export default {
 };
 </script>
 
-<style>
-.action-container {
-  flex-grow: 1
-}
-</style>

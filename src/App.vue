@@ -1,15 +1,36 @@
-<script setup>
+<script>
 import ThePanel from '@/components/ThePanel.vue'
 import TheKeyboard from '@/components/TheKeyboard.vue'
 import TheSheet from '@/components/TheSheet.vue'
+import {defineComponent, provide, ref } from 'vue';
 // import TheWelcome from '@/components/TheWelcome.vue'
 
+export default defineComponent({
+  name: 'App',
+  components: {
+    ThePanel,
+    TheSheet,
+    TheKeyboard,
+  },
+  setup() {
+    const engine = ref({});
+    provide('engine', engine);
+    return { engine };
+  },
+  methods: {
+    assingApp(engine) {
+      console.log(this);
+      console.log('The engine is ready', engine);
+      this.engine.value = engine;
+    },
+  },
+});
 </script>
 
 <template lang="pug">
 #game
   ThePanel
-  TheSheet
+  TheSheet(@app-ready="assingApp")
   TheKeyboard
 
 </template>

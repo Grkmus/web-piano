@@ -5,7 +5,7 @@
 
 <script>
 // /*eslint-disable*/
-import Sketch from './Sketch.js';
+import initialize from '@/game/Sketch.js';
 
 export default {
   name: 'TheSheet',
@@ -15,9 +15,12 @@ export default {
     };
   },
   async mounted() {
-    Sketch.initApp(this.$refs.myCanvas, this.$refs.scene).then(() => {
-      this.$emit('app-ready', Sketch);
-    });
+    initialize(this.$refs.myCanvas, this.$refs.scene)
+    // const mong = await
+    // console.log(song) 
+    // Sketch.initApp(this.$refs.myCanvas, this.$refs.scene).then(() => {
+    //   this.$emit('app-ready', Sketch);
+    // });
 
     // this.initializeTheScene();
     // const thing = new Graphics();

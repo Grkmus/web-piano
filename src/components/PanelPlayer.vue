@@ -1,14 +1,16 @@
 <template lang='pug'>
-PanelTemplate(name="Player")
-  font-awesome-icon(icon='step-backward' size='2x')
-  //- font-awesome-icon(v-if='isPlaying' @click='isPlaying=false' icon='pause' size='2x')
-  //- font-awesome-icon(v-else='' @click='isPlaying=true' icon='play' size='2x')
-  //- font-awesome-icon(@click='stop' icon='stop' size='2x')
-  //- font-awesome-icon(icon='step-forward' size='2x')
+.panel
+  label Player
+  .controls
+    font-awesome-icon.control(icon='step-backward' size='2x')
+    font-awesome-icon.control(v-if='isPlaying' @click='pause' icon='pause' size='2x')
+    font-awesome-icon.control(v-else @click='play' icon='play' size='2x')
+    font-awesome-icon.control(@click='stop' icon='stop' size='2x')
+    font-awesome-icon.control(icon='step-forward' size='2x')
 </template>
 
 <script>
-import { inject } from 'vue';
+import { inject, ref } from 'vue';
 import PanelTemplate from './PanelTemplate.vue';
 
 export default {
@@ -17,17 +19,40 @@ export default {
     PanelTemplate,
   },
   setup() {
-    const app = inject('theApp');
-    console.log(app);
-    return { app };
+    const engine = inject('engine');
+    const isPlaying = ref(false)
+    return { engine, isPlaying };
   },
+
   methods: {
-    play() { this.app.value.start(); },
-    stop() { this.app.value.stop(); },
-    pause() { this.app.value.pause(); },
+    play() { 
+      this.isPlaying = true
+      this.engine.value.start();
+    },
+    stop() { 
+      this.isPlaying = false
+      this.engine.value.stop();
+    },
+    pause() { 
+      this.isPlaying = false
+      this.engine.value.pause();
+    },
   },
 };
 </script>
 
 <style>
+.panel {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+
+.control {
+  margin: 5px;
+}
+.controls {
+  display: flex;
+  justify-content: space-around;
+}
 </style>

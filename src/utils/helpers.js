@@ -2,9 +2,9 @@ import { Midi } from '@tonejs/midi';
 
 const reader = new FileReader();
 
-export default function readFile() {
+function readFile(fileName) {
   return new Promise((resolve, reject) => {
-    fetch(`${import.meta.env.BASE_URL}MozartWolfgangAmadeus_AllaTurcaRondo.midi`).then((res) => res.blob()).then((res) => {
+    fetch(`${import.meta.env.BASE_URL}${fileName}`).then((res) => res.blob()).then((res) => {
       reader.readAsArrayBuffer(res);
     });
 
@@ -18,3 +18,12 @@ export default function readFile() {
     });
   });
 }
+
+function* makeRangeIterator(start = 0, array) {
+  for (let i = start; i < array.length; i += 1) {
+    yield array[i];
+  }
+  return null;
+}
+
+export {readFile, makeRangeIterator}

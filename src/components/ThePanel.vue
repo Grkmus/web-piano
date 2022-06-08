@@ -36,6 +36,7 @@ import PanelLooping from '@/components/PanelLooping.vue';
 #panel {
   display: flex;
   justify-content: space-around;
+  font-family: 'Courier New', Courier, monospace;
 }
 
 </style>
