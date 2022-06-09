@@ -2,10 +2,12 @@ import Engine from "./Engine"
 import Song from "./Song"
 
 export default function initialize(view, parentDiv) {
-  const engine = new Engine(view, parentDiv)
-  const song = new Song('MozartWolfgangAmadeus_AllaTurcaRondo.midi', engine.pixi)
-  engine.placeSong(song)
-  console.log(engine)
+  return new Promise(resolve => {
+    const engine = new Engine(view, parentDiv)
+    const song = new Song('MozartWolfgangAmadeus_AllaTurcaRondo.midi')
+    engine.placeSong(song)
+    resolve(engine)
+  })
 }
 
 // export default {

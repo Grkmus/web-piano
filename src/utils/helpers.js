@@ -26,4 +26,6 @@ function* makeRangeIterator(start = 0, array) {
   return null;
 }
 
-export {readFile, makeRangeIterator}
+function bpm2px(deltaTime) { return (120 * 4) / (1000 / deltaTime); }
+
+export {readFile, makeRangeIterator, bpm2px}

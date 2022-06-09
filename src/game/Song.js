@@ -9,10 +9,9 @@ export default class Song {
   constructor(fileName) {
     this.fileName = fileName
     this.noteContainers = null
-    this.pixi = Engine.instance
+    this.pixi = Engine.instance.pixi
   }
   init() {
-    console.log('initting')
     return new Promise(resolve => {
       readFile(this.fileName).then((data) => {
         const notes = data.tracks.reduce(

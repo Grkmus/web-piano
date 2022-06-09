@@ -1,12 +1,10 @@
-// /*eslint-disable*/
 import { Application, Container } from 'pixi.js';
-import { makeRangeIterator } from '../utils/helpers';
+import { bpm2px, makeRangeIterator } from '../utils/helpers';
 import _ from 'lodash';
 
 export default class Engine {
   constructor(view, parentDiv) {
     if (Engine.instance == null) {
-      console.log('okaoka')
       this.pixi = new Application({view});
       view.width = parentDiv.clientWidth;
       view.height = parentDiv.clientHeight;
@@ -15,26 +13,53 @@ export default class Engine {
       Engine.instance = this
     }
     return Engine.instance
-    // this.noteContainers = await this.createNoteContainers();
-    // this.cachedNotes = _.cloneDeep(this.noteContainers)
-    // this.observableView = new Container();
-    // this.observableView.addChild(...this.noteContainers.slice(0, 3));
-    // this.notesIterator = makeRangeIterator(3, this.noteContainers);
-    // this.app.stage.addChild(this.observableView);
-    // this.app.ticker.add(() => this.gameLoop());
-    // this.app.ticker.stop();
   }
   async placeSong(song) {
     this.currentSong = song
     const noteContainers = await song.init()
     this.observableView = new Container();
-    this.observableView.addChild(...noteContainers.slice(0, 3));
+    this.observableView.addChild(...noteContainers);
     this.notesIterator = makeRangeIterator(3, noteContainers);
     this.pixi.stage.addChild(this.observableView);
     this.pixi.ticker.add(() => this.gameLoop());
     this.pixi.ticker.stop();
   }
 
+  start() { this.pixi.ticker.start(); }
+  pause() { this.pixi.ticker.stop(); }
+  stop() { 
+    this.pixi.stage.y = -this.pixi.screen.height;
+    this.pixi.stage.removeChildren()
+    this.observableView = new Container();
+    this.observableView.removeChildren()
+    this.observableView.addChild(...this.currentSong.noteContainers);
+    // this.notesIterator = makeRangeIterator(3, this.currentSong.noteContainers);
+    this.pixi.stage.addChild(this.observableView);
+    setTimeout(() => this.pause(), 100)
+  }
 
+  gameLoop() {
+    this.pixi.stage.y += bpm2px(this.pixi.ticker.deltaMS);
+    const hitPosition = -this.pixi.stage.y + this.pixi.screen.height;
+    this.currentSong.noteContainers.forEach(group => {
+      for (let i = group.children.length - 1; i >= 0; i -= 1) {
+          const note = group.children[i];
+          note.update(hitPosition);
+        }
+    });
+    // this.observableView.children.forEach((group) => {
+    //   for (let i = group.children.length - 1; i >= 0; i -= 1) {
+    //     const note = group.children[i];
+    //     note.update(hitPosition);
+    //     if (note.isPlayed) group.removeChild(note);
+    //     if (group.children.length === 0) {
+    //       // this.observableView.removeChild(group);
+    //       const nextContainer = this.notesIterator.next().value;
+    //       if (!nextContainer) return;
+    //       this.observableView.addChild(nextContainer);
+    //     }
+    //   }
+    // });
+  }
 }
 
