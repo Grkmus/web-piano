@@ -4,32 +4,31 @@ div(v-bind:class='{ pressed: currentVelocity}')
 </template>
 
 <script>
-// import piano from '../models/Piano';
+// import piano from '@/game/Piano';
 
 export default {
   name: 'Key',
   props: {
     velocity: Number,
     note: String,
+    midiNumber: Number
   },
   data() {
     return {
       currentVelocity: 0,
     };
   },
-  // mounted() {
-  //   this.$root.$on('reset', this.releaseKey);
-  // },
-  // methods: {
-  //   pressKey(velocity, midiNumber) {
-  //     piano.keyDown({ midi: midiNumber });
-  //     this.currentVelocity = velocity;
-  //   },
-  //   releaseKey(midiNumber) {
-  //     this.currentVelocity = 0;
-  //     piano.keyUp({ midi: midiNumber });
-  //   },
-  // },
+
+  methods: {
+    pressKey(velocity, midiNumber) {
+      // piano.keyDown({ midi: 72 });
+      this.currentVelocity = 100;
+    },
+    releaseKey(midiNumber) {
+      this.currentVelocity = 0;
+      // piano.keyUp({ midi: midiNumber });
+    },
+  },
 };
 </script>
 

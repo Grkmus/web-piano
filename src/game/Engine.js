@@ -1,14 +1,14 @@
-import { Application, Container } from 'pixi.js';
-import { bpm2px, makeRangeIterator } from '../utils/helpers';
+import { Application } from 'pixi.js';
+import { bpm2px } from '../utils/helpers';
 import _ from 'lodash';
 
 export default class Engine {
-  constructor(view, parentDiv) {
+  constructor(view) {
     if (Engine.instance == null) {
-      this.pixi = new Application({view});
-      view.width = parentDiv.clientWidth;
-      view.height = parentDiv.clientHeight;
-      this.observableView = null;
+      this.pixi = new Application({
+        view,
+        resizeTo: view
+      });
       this.currentSong = null;
       Engine.instance = this
     }
@@ -16,50 +16,34 @@ export default class Engine {
   }
   async placeSong(song) {
     this.currentSong = song
-    const noteContainers = await song.init()
-    this.observableView = new Container();
-    this.observableView.addChild(...noteContainers);
-    this.notesIterator = makeRangeIterator(3, noteContainers);
-    this.pixi.stage.addChild(this.observableView);
+    const notes = await song.init()
+    this.pixi.stage.addChild(...notes);
     this.pixi.ticker.add(() => this.gameLoop());
     this.pixi.ticker.stop();
   }
 
-  start() { this.pixi.ticker.start(); }
+  start() { 
+    // this.pixi.ticker.speed = 0.5
+    this.pixi.ticker.start();
+
+  }
   pause() { this.pixi.ticker.stop(); }
   stop() { 
     this.pixi.stage.y = -this.pixi.screen.height;
     this.pixi.stage.removeChildren()
-    this.observableView = new Container();
-    this.observableView.removeChildren()
-    this.observableView.addChild(...this.currentSong.noteContainers);
-    // this.notesIterator = makeRangeIterator(3, this.currentSong.noteContainers);
-    this.pixi.stage.addChild(this.observableView);
+    this.currentSong.reset()
+    this.pixi.stage.addChild(...this.currentSong.notes);
     setTimeout(() => this.pause(), 100)
   }
 
   gameLoop() {
     this.pixi.stage.y += bpm2px(this.pixi.ticker.deltaMS);
     const hitPosition = -this.pixi.stage.y + this.pixi.screen.height;
-    this.currentSong.noteContainers.forEach(group => {
-      for (let i = group.children.length - 1; i >= 0; i -= 1) {
-          const note = group.children[i];
-          note.update(hitPosition);
-        }
-    });
-    // this.observableView.children.forEach((group) => {
-    //   for (let i = group.children.length - 1; i >= 0; i -= 1) {
-    //     const note = group.children[i];
-    //     note.update(hitPosition);
-    //     if (note.isPlayed) group.removeChild(note);
-    //     if (group.children.length === 0) {
-    //       // this.observableView.removeChild(group);
-    //       const nextContainer = this.notesIterator.next().value;
-    //       if (!nextContainer) return;
-    //       this.observableView.addChild(nextContainer);
-    //     }
-    //   }
-    // });
+    for (let i = this.currentSong.notes.length - 1; i >= 0; i -= 1) {
+      const note = this.currentSong.notes[i];
+      if (note.isPlayed) continue
+      note.update(hitPosition)
+    }
   }
 }
 

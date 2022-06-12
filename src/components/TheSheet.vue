@@ -1,6 +1,6 @@
 <template lang='pug'>
-#sheet(ref="scene")
-  canvas(ref="myCanvas")
+#sheet
+  canvas(ref="scene" style="height: 100%; width: 100%;")
 </template>
 
 <script>
@@ -15,7 +15,7 @@ export default {
     };
   },
   async mounted() {
-    initialize(this.$refs.myCanvas, this.$refs.scene).then(engine => {
+    initialize(this.$refs.scene).then(engine => {
       this.$emit('app-ready', engine)
     })
   },

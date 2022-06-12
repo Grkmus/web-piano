@@ -3,7 +3,6 @@ import ThePanel from '@/components/ThePanel.vue'
 import TheKeyboard from '@/components/TheKeyboard.vue'
 import TheSheet from '@/components/TheSheet.vue'
 import {defineComponent, provide, ref } from 'vue';
-// import TheWelcome from '@/components/TheWelcome.vue'
 
 export default defineComponent({
   name: 'App',

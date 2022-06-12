@@ -1,54 +1,46 @@
 import { Sprite, Graphics } from 'pixi.js';
-
+import Engine from './Engine';
 const LOWEST_KEY = 24;
-const keyWidth = 10.273809523809524;
-// const STANDART_QUARTER_NOTE_HEIGHT = 1;
-// const OFFSETS = {
-//   'C#': 2,
-//   'D#': 4,
-//   'F#': 6,
-//   'G#': 4,
-//   G: 5,
-//   A: 3,
-//   E: 3,
-//   F: 5,
-//   D: 5,
-// };
+
 export default class Note extends Sprite {
-  constructor(note, app) {
-    const { midi, durationTicks, ticks } = note;
+  constructor(note) {
     super();
-    this.midiNumber = midi;
-    this.w = (app.screen.width / 7) / 12;
+    this.note = note
+    const { midi, durationTicks, ticks } = note;
+    this.pixi = Engine.instance.pixi
+    this.w = (this.pixi.screen.width / 7) / 12;
     this.h = durationTicks;
+    this.defaultColor = 0xf51616
     const thing = new Graphics();
-    thing.lineStyle(1, 0xff0000, 1);
-    thing.beginFill(0xffFF00, 0.5);
+    thing.beginFill(this.defaultColor, 0.5);
     thing.drawRoundedRect(0, 0, this.w, this.h, 10);
-    this.x = (midi - LOWEST_KEY) * keyWidth;
+    
+    this.x = (midi - LOWEST_KEY + 1) * this.w;
     this.y = -ticks;
     this.isNoteOn = false;
     this.isPlayed = false;
     this.hitPosition = 0;
     this.anchor.set(1, 1);
-    this.app = app;
-    const texture = this.app.renderer.generateTexture(thing); //eslint-disable-line
+    const texture = this.pixi.renderer.generateTexture(
+      thing,
+      { resolution: window.devicePixelRatio }
+    );
     this.texture = texture;
   }
 
   update(hitPosition) {
     this.hitPosition = hitPosition;
-    // console.log('catch the position from note!', position);
     if (this.noteOnCheck()) { this.noteOn(); }
     if (this.noteOffCheck()) { this.noteOff(); }
   }
 
   changeColor(color = 0x2F329F) {
     const thing = new Graphics();
-    thing.lineStyle(1, 0xff0000, 1);
     thing.beginFill(color, 0.5);
     thing.drawRoundedRect(0, 0, this.w, this.h, 10);
-    return this.app.renderer.generateTexture(thing); //eslint-disable-line
+    return this.pixi.renderer.generateTexture(thing, {
+      resolution: 1,
+    });
   }
 
   // eslint-disable-next-line
@@ -58,14 +50,19 @@ export default class Note extends Sprite {
   noteOffCheck() { return this.hitPosition <= this.position.y - this.height; }
 
   noteOn() {
-    // console.log('note on');
     this.isNoteOn = true;
     this.texture = this.changeColor();
+    const { octave, pitch, midi } = this.note
+    const event = new CustomEvent('note-on', { detail: { octave, pitch, midi} })
+    window.dispatchEvent(event)
+    
   }
-
+  
   noteOff() {
-    // console.log('noteOff');
     this.isPlayed = true;
+    const { octave, pitch, midi } = this.note
+    const event = new CustomEvent('note-off', { detail: { octave, pitch, midi } })
+    window.dispatchEvent(event)
   }
 
   // handEnableCheck() {
