@@ -2,11 +2,11 @@
 .panel
   label Player
   .controls
-    font-awesome-icon.control(icon='step-backward' size='2x')
+    font-awesome-icon.control(@click='stepBackward' icon='step-backward' size='2x')
     font-awesome-icon.control(v-if='isPlaying' @click='pause' icon='pause' size='2x')
     font-awesome-icon.control(v-else @click='play' icon='play' size='2x')
     font-awesome-icon.control(@click='stop' icon='stop' size='2x')
-    font-awesome-icon.control(icon='step-forward' size='2x')
+    font-awesome-icon.control(@click='stepForward' icon='step-forward' size='2x')
 </template>
 
 <script>
@@ -37,6 +37,12 @@ export default {
       this.isPlaying = false
       this.engine.value.pause();
     },
+    stepForward() {
+      this.engine.value.stepForward();
+    },
+    stepBackward() {
+      this.engine.value.stepBackward();
+    }
   },
 };
 </script>

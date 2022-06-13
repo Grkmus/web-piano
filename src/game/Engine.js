@@ -1,6 +1,5 @@
 import { Application, Graphics } from 'pixi.js';
 import { bpm2px } from '../utils/helpers';
-import { range } from 'd3'
 import _ from 'lodash';
 
 export default class Engine {
@@ -38,7 +37,12 @@ export default class Engine {
     setTimeout(() => this.pause(), 100)
     window.dispatchEvent(new CustomEvent('reset'))
   }
-
+  stepForward() {
+    this.pixi.stage.y += 240
+  }
+  stepBackward() {
+    this.pixi.stage.y -= 240
+  }
   gameLoop() {
     this.pixi.stage.y += bpm2px(this.currentSong.data.header.tempos[0].bpm, this.pixi.ticker.deltaMS);
     const hitPosition = - this.pixi.stage.y + this.pixi.screen.height;
