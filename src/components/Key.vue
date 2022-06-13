@@ -18,6 +18,9 @@ export default {
       currentVelocity: 0,
     };
   },
+  mounted() {
+    window.addEventListener('reset', this.releaseKey)
+  },
 
   methods: {
     pressKey(velocity, midiNumber) {

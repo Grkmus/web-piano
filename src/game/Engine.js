@@ -1,5 +1,6 @@
-import { Application } from 'pixi.js';
+import { Application, Graphics } from 'pixi.js';
 import { bpm2px } from '../utils/helpers';
+import { range } from 'd3'
 import _ from 'lodash';
 
 export default class Engine {
@@ -23,22 +24,24 @@ export default class Engine {
   }
 
   start() { 
-    // this.pixi.ticker.speed = 0.5
+    // this.pixi.ticker.speed = 0.2
     this.pixi.ticker.start();
 
   }
   pause() { this.pixi.ticker.stop(); }
-  stop() { 
+  stop() {
+    this.pixi.ticker.start();
     this.pixi.stage.y = -this.pixi.screen.height;
     this.pixi.stage.removeChildren()
     this.currentSong.reset()
     this.pixi.stage.addChild(...this.currentSong.notes);
     setTimeout(() => this.pause(), 100)
+    window.dispatchEvent(new CustomEvent('reset'))
   }
 
   gameLoop() {
-    this.pixi.stage.y += bpm2px(this.pixi.ticker.deltaMS);
-    const hitPosition = -this.pixi.stage.y + this.pixi.screen.height;
+    this.pixi.stage.y += bpm2px(this.currentSong.data.header.tempos[0].bpm, this.pixi.ticker.deltaMS);
+    const hitPosition = - this.pixi.stage.y + this.pixi.screen.height;
     for (let i = this.currentSong.notes.length - 1; i >= 0; i -= 1) {
       const note = this.currentSong.notes[i];
       if (note.isPlayed) continue
