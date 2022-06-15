@@ -3,38 +3,35 @@ import Engine from './Engine';
 const LOWEST_KEY = 24;
 
 export default class Note extends Sprite {
-  constructor(note) {
+  constructor(note, i) {
     super();
     this.note = note
     const { midi, durationTicks, ticks } = note;
+    this.engine = Engine.instance
     this.pixi = Engine.instance.pixi
     this.w = (this.pixi.screen.width / 7) / 12;
     this.h = durationTicks;
-    this.defaultColor = 0xf51616
-    const thing = new Graphics();
-    thing.beginFill(this.defaultColor, 0.5);
-    thing.drawRoundedRect(0, 0, this.w, this.h, 10);
-    
+    this.hand = i === 1 ? 'left' : 'right'
     this.x = (midi - LOWEST_KEY + 1) * this.w;
     this.y = -ticks;
     this.isNoteOn = false;
     this.isPlayed = false;
     this.hitPosition = 0;
     this.anchor.set(1, 1);
-    const texture = this.pixi.renderer.generateTexture(
-      thing,
-      { resolution: window.devicePixelRatio }
-    );
-    this.texture = texture;
+    this.defaultTexture = i === 1 ? this.generateTexture(0xf51616) : this.generateTexture(0x00FF00) 
+    this.disabledTexture = this.generateTexture(0x8b95a6);
+    this.noteOnTexture = this.generateTexture(0x2F329F);
+    this.texture = this.defaultTexture;
   }
 
   update(hitPosition) {
     this.hitPosition = hitPosition;
     if (this.noteOnCheck()) { this.noteOn(); }
     if (this.noteOffCheck()) { this.noteOff(); }
+    this.handEnableCheck()
   }
 
-  changeColor(color = 0x2F329F) {
+  generateTexture(color) {
     const thing = new Graphics();
     thing.beginFill(color, 0.5);
     thing.drawRoundedRect(0, 0, this.w, this.h, 10);
@@ -51,7 +48,7 @@ export default class Note extends Sprite {
 
   noteOn() {
     this.isNoteOn = true;
-    this.texture = this.changeColor();
+    this.texture = this.noteOnTexture;
     const { octave, pitch, midi } = this.note
     const event = new CustomEvent('note-on', { detail: { octave, pitch, midi} })
     window.dispatchEvent(event)
@@ -65,18 +62,13 @@ export default class Note extends Sprite {
     window.dispatchEvent(event)
   }
 
-  // handEnableCheck() {
-  //   if (this.settings.LEFT_HAND_ENABLED.checked && this.hand === 'left') {
-  //     this.color = WHITE_COLOR;
-  //     this.isEnabled = true;
-  //   } else if (this.settings.RIGHT_HAND_ENABLED.checked && this.hand === 'right') {
-  //     this.color = WHITE_COLOR;
-  //     this.isEnabled = true;
-  //   } else {
-  //     this.color = GRAY_COLOR;
-  //     this.isEnabled = false;
-  //   }
-  // }
+  handEnableCheck() {
+    if (this.engine.leftHand && this.hand === 'left' || this.engine.rightHand && this.hand === 'right') {
+      this.texture = this.defaultTexture  
+    } else {
+      this.texture = this.disabledTexture  
+    }
+  }
 
   pickMode() {
     if (this.settings.WAIT_FOR_INPUT_MODE.checked && this.isEnabled) {

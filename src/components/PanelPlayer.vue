@@ -11,13 +11,10 @@
 
 <script>
 import { inject, ref } from 'vue';
-import PanelTemplate from './PanelTemplate.vue';
+// import PanelTemplate from './PanelTemplate.vue';
 
 export default {
   name: 'PanelPlayer',
-  components: {
-    PanelTemplate,
-  },
   setup() {
     const engine = inject('engine');
     const isPlaying = ref(false)

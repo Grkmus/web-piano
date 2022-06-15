@@ -1,8 +1,8 @@
 <template lang='pug'>
-PanelTemplate(name="Tempo")
-  //- template(v-slot)
-  //-   label.col-3(for='tempo') bpm
-  //-   q-slider.col-8(v-model="tempo" :min="0" :max="300" label)
+.panel
+  label(for='tempo') Tempo
+  input#tempo(v-model='tempo' type='range' name='tempo' min='1' max='240' step='1')
+  input#tempo(v-model='tempo' type='number' name='tempoInput')
 </template>
 
 <script>
@@ -15,16 +15,13 @@ export default {
     PanelTemplate,
   },
   setup() {
-    const app = inject('theApp');
-    return { app, tempo: ref(120) };
+    const engine = inject('engine');
+    return { engine, tempo: ref(120) };
   },
   watch: {
     tempo(newVal) {
-      this.app.value.tempoChange(newVal);
+      this.engine.value.tempoChange(newVal);
     },
   },
 };
 </script>
-
-<style>
-</style>

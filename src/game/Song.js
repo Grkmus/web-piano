@@ -17,10 +17,9 @@ export default class Song {
         this.data = data
         console.log(data)
         const notes = data.tracks.reduce(
-          (prev, current) => [...prev, ...current.notes.map((note) => new Note(note))], []
+          (prev, current, i) => [...prev, ...current.notes.map((note) => new Note(note, i))], []
         );
         this.notes = notes
-        console.log(notes)
         resolve(notes)
       })
     })

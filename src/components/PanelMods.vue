@@ -1,11 +1,17 @@
 <template lang='pug'>
-PanelTemplate(name="Mods")
-  //- template(v-slot)
-  //-   q-radio(v-model='mode' val="playAlong" label="Play Along" )
-  //-   q-radio(v-model='mode' val="waitForInput" label="Wait for Input")
-  //-   q-separator(vertical)
-  //-   q-checkbox(v-model="leftHand" label="Left Hand")
-  //-   q-checkbox(v-model="rightHand" label="Right Hand")
+.panel
+  label Mod
+  .column
+    .row
+      label(for='play-along') Play along
+      input#play-along(type='radio' name='mode' value='playAlong' v-model='mode')
+      label(for='wait-input') Wait for input
+      input#wait-input(type='radio' name='mode' value='waitInput' v-model='mode')
+    .row
+      label(for='left-hand') Left Hand
+      input#left-hand(type='checkbox' name='left-hand' value='leftHand' v-model='leftHand')
+      label(for='right-hand') Right Hand
+      input#right-hand(type='checkbox' name='left-hand' value='rightHand' v-model='rightHand')
 </template>
 
 <script>
@@ -18,26 +24,32 @@ export default {
     PanelTemplate,
   },
   setup() {
+    const engine = inject('engine');
     const mode = ref('playAlong');
     const leftHand = ref(true);
     const rightHand = ref(true);
-    const app = inject('theApp');
     return {
-      app, mode, leftHand, rightHand,
+      engine, mode, leftHand, rightHand,
     };
   },
   watch: {
-    mode(newVal) { this.app.value.mode(newVal); },
-    leftHand(newVal) { this.app.value.leftHand(newVal); },
-    rightHand(newVal) { this.app.value.rightHand(newVal); },
+    mode(newVal) { this.engine.value.mode(newVal); },
+    leftHand(newVal) { this.engine.value.leftHand = newVal; },
+    rightHand(newVal) { this.engine.value.rightHand = newVal; },
   },
 };
 </script>
 
 <style>
-label {
-  white-space: nowrap;
-  overflow: hidden;
-  text-overflow: ellipsis;
+
+.panel {
+  display: flex;
+  flex-direction: column;
+  text-align: center;
+}
+.column {
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
 }
 </style>
