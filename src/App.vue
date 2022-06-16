@@ -18,9 +18,9 @@ export default defineComponent({
   },
   methods: {
     assingApp(engine) {
-      console.log(this);
       console.log('The engine is ready', engine);
       this.engine.value = engine;
+      window.engine = engine
     },
   },
 });

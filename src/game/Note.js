@@ -26,8 +26,11 @@ export default class Note extends Sprite {
 
   update(hitPosition) {
     this.hitPosition = hitPosition;
+    if (this.noteOffCheck()) { 
+      if (this.isNoteOn) { this.noteOff() }
+      else return
+    }
     if (this.noteOnCheck()) { this.noteOn(); }
-    if (this.noteOffCheck()) { this.noteOff(); }
     this.handEnableCheck()
   }
 
@@ -40,26 +43,28 @@ export default class Note extends Sprite {
     });
   }
 
-  // eslint-disable-next-line
-  noteOnCheck() { return this.hitPosition <= this.position.y  && !this.isNoteOn; }
+  
+  noteOnCheck() {
+    return this.hitPosition <= this.position.y && this.hitPosition >= this.position.y - this.height
+  }
 
-  // eslint-disable-next-line
-  noteOffCheck() { return this.hitPosition <= this.position.y - this.height; }
+  noteOffCheck() { return this.position.y - this.height >= this.hitPosition }
 
   noteOn() {
-    this.isNoteOn = true;
-    this.texture = this.noteOnTexture;
-    const { octave, pitch, midi } = this.note
-    const event = new CustomEvent('note-on', { detail: { octave, pitch, midi} })
-    window.dispatchEvent(event)
-    
+    if (!this.isNoteOn) {
+      this.texture = this.noteOnTexture;
+      const { octave, pitch, midi } = this.note
+      const event = new CustomEvent('note-on', { detail: { octave, pitch, midi} })
+      window.dispatchEvent(event)
+      this.isNoteOn = true;
+    }
   }
   
   noteOff() {
-    this.isPlayed = true;
     const { octave, pitch, midi } = this.note
     const event = new CustomEvent('note-off', { detail: { octave, pitch, midi } })
     window.dispatchEvent(event)
+    this.isNoteOn = false;
   }
 
   handEnableCheck() {

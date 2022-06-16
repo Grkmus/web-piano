@@ -3,11 +3,6 @@
   label Mod
   .column
     .row
-      label(for='play-along') Play along
-      input#play-along(type='radio' name='mode' value='playAlong' v-model='mode')
-      label(for='wait-input') Wait for input
-      input#wait-input(type='radio' name='mode' value='waitInput' v-model='mode')
-    .row
       label(for='left-hand') Left Hand
       input#left-hand(type='checkbox' name='left-hand' value='leftHand' v-model='leftHand')
       label(for='right-hand') Right Hand
@@ -51,5 +46,6 @@ export default {
   display: flex;
   flex-direction: column;
   justify-content: space-around;
+  align-items: center;
 }
 </style>

@@ -1,16 +1,8 @@
 <template lang='pug'>
-PanelTemplate(name="Looping")
-  //- template(v-slot)
-  //-   q-checkbox(v-model='isLooping' dense)
-  //-   q-range(
-  //-     :disable='!isLooping'
-  //-     v-model='limits'
-  //-     :min="0"
-  //-     :max="50"
-  //-     :dense='true'
-  //-     @change="change"
-  //-     label
-  //-   )
+.panel
+  input#looping(v-model='loopEnabled' type='checkbox' name='looping' min='1' max='240' step='1')
+  input#loop-start(v-model='limits.min' type='number' name='loop-start' step='1000' :disabled='!loopEnabled' style='width: 50px')
+  input#loop-end(v-model='limits.max' type='number' name='loop-end' step='1000' :disabled='!loopEnabled' style='width: 50px')
 </template>
 
 <script>
@@ -23,27 +15,26 @@ export default {
     PanelTemplate,
   },
   setup() {
-    const isLooping = ref(false);
+    const loopEnabled = ref(false);
     const limits = ref({
-      min: 10,
-      max: 35,
+      min: 1000,
+      max: 3500,
     });
-    const app = inject('theApp');
-    console.log(app);
-    return { app, isLooping, limits };
+    const engine = inject('engine');
+    console.log(engine);
+    return { engine, loopEnabled, limits };
   },
   watch: {
-    isLooping(newVal) {
+    loopEnabled(newVal) {
       if (newVal) {
-        this.app.value.loop(this.limits);
+        this.engine.value.enableLooping(this.limits);
+      } else {
+        this.engine.value.disableLooping();
       }
     },
   },
   methods: {
-    change() { this.app.value.loop(this.limits); },
+    change() { this.engine.value.loop(this.limits); },
   },
 };
 </script>
-
-<style>
-</style>
