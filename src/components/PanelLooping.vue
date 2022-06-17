@@ -21,7 +21,6 @@ export default {
       max: 3500,
     });
     const engine = inject('engine');
-    console.log(engine);
     return { engine, loopEnabled, limits };
   },
   watch: {
@@ -32,6 +31,17 @@ export default {
         this.engine.value.disableLooping();
       }
     },
+    limits: {
+      handler(newVal) {
+        if (newVal) {
+          this.engine.value.enableLooping(this.limits);
+        } else {
+          this.engine.value.disableLooping();
+        }
+      },
+      deep: true
+    }
+
   },
   methods: {
     change() { this.engine.value.loop(this.limits); },

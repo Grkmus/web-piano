@@ -60,12 +60,11 @@ export default class Engine {
     window.dispatchEvent(new CustomEvent('reset'))
   }
   enableLooping(limits) {
-    console.log(limits)
+    window.dispatchEvent(new CustomEvent('reset'))
     this.notesContainer.removeChildren()
     const newNotes = this.currentSong.notes.filter((note) => {
       return Math.abs(note.y) > limits.min && Math.abs(note.y) < limits.max
     })
-    console.log(newNotes)
     if (!_.isEmpty(newNotes)) 
       this.notesContainer.addChild(...newNotes)
     this.notesContainer.y = limits.min - this.pixi.screen.height
@@ -73,8 +72,6 @@ export default class Engine {
     this.pixi.ticker.add(this.loopFunc)
   }
   disableLooping() {
-    console.log('disabled')
-    window.dispatchEvent(new CustomEvent('reset'))
     this.notesContainer.removeChildren()
     this.notesContainer.addChild(...this.currentSong.notes)
     this.pixi.ticker.remove(this.loopFunc)
@@ -82,6 +79,7 @@ export default class Engine {
   loopInArea(limits) {
     if (this.notesContainer.y >= limits.max + this.pixi.screen.height) {
       this.notesContainer.y = limits.min
+      window.dispatchEvent(new CustomEvent('reset'))
     }
   }
   stepForward() { this.pixi.stage.y += 240 }
