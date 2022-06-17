@@ -11,7 +11,6 @@
 
 <script>
 import { inject, ref } from 'vue';
-// import PanelTemplate from './PanelTemplate.vue';
 
 export default {
   name: 'PanelPlayer',

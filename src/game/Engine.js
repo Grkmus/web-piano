@@ -1,29 +1,23 @@
 import { Application, Text, TextStyle, Container } from 'pixi.js';
-import {
-  SmoothGraphics as Graphics,
-  settings,
-  LINE_SCALE_MODE,
-} from '@pixi/graphics-smooth';
 import { bpm2px } from '../utils/helpers';
 import _ from 'lodash';
 const style = new TextStyle({
-  fontFamily: 'Arial',
+  fontFamily: 'monospace',
   fontSize: 36,
-  fontStyle: 'italic',
   fontWeight: 'bold',
-  fill: ['#ffffff', '#00ff99'], // gradient
+  fill: ['#ffffff'], // gradient
   stroke: '#4a1850',
   strokeThickness: 5,
   dropShadow: true,
   dropShadowColor: '#000000',
   dropShadowBlur: 4,
-  dropShadowAngle: Math.PI / 6,
+  // dropShadowAngle: Math.PI / 6,
   dropShadowDistance: 6,
   wordWrap: true,
   wordWrapWidth: 440,
   lineJoin: 'round',
 });
-settings.LINE_SCALE_MODE = LINE_SCALE_MODE.NONE;
+
 export default class Engine {
   constructor(view) {
     if (Engine.instance == null) {
@@ -54,19 +48,7 @@ export default class Engine {
     this.pixi.ticker.add(() => this.gameLoop());
     this.pixi.ticker.stop();
   }
-  start() {
-    this.pixi.ticker.start();
-    const thing = new Graphics();
-    thing.beginFill(0xf51616, 0.5, true);
-    thing.drawRoundedRect(
-      this.pixi.screen.width / 2,
-      this.pixi.screen.height / 2,
-      20,
-      40,
-      10
-    );
-    this.pixi.stage.addChild(thing);
-  }
+  start() { this.pixi.ticker.start(); }
   pause() {
     this.pixi.ticker.stop();
   }
@@ -74,11 +56,6 @@ export default class Engine {
     this.pause();
     this.notesContainer.y = 0;
     this.pixi.ticker.update();
-    // this.pixi.stage.removeChild(this.notesContainer)
-    // // this.currentSong.reset()
-    // this.pixi.stage.addChild(...this.currentSong.notes);
-    // setTimeout(() => this.pause(), 100)
-    // this.pause()
     window.dispatchEvent(new CustomEvent('reset'));
   }
   enableLooping(limits) {
@@ -104,10 +81,12 @@ export default class Engine {
     }
   }
   stepForward() {
-    this.pixi.stage.y += 240;
+    window.dispatchEvent(new CustomEvent('reset'));
+    this.notesContainer.y += 240;
   }
   stepBackward() {
-    this.pixi.stage.y -= 240;
+    window.dispatchEvent(new CustomEvent('reset'));
+    this.notesContainer.y -= 240;
   }
   tempoChange(tempo) {
     this.tempo = Number(tempo);
