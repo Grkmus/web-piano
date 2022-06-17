@@ -1,4 +1,4 @@
-<template lang='pug'>
+<template lang="pug">
 .panel
   label(for='tempo') Tempo
   input#tempo(v-model='tempo' type='range' name='tempo' min='1' max='240' step='1')

@@ -1,4 +1,4 @@
-<template lang='pug'>
+<template lang="pug">
 .panel
   input#looping(v-model='loopEnabled' type='checkbox' name='looping' min='1' max='240' step='1')
   input#loop-start(v-model='limits.min' type='number' name='loop-start' step='1000' :disabled='!loopEnabled' style='width: 50px')
@@ -39,12 +39,13 @@ export default {
           this.engine.value.disableLooping();
         }
       },
-      deep: true
-    }
-
+      deep: true,
+    },
   },
   methods: {
-    change() { this.engine.value.loop(this.limits); },
+    change() {
+      this.engine.value.loop(this.limits);
+    },
   },
 };
 </script>

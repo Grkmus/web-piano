@@ -3,7 +3,7 @@ import PanelPlayer from '@/components/PanelPlayer.vue';
 import PanelMods from '@/components/PanelMods.vue';
 import PanelTempo from '@/components/PanelTempo.vue';
 import PanelLooping from '@/components/PanelLooping.vue';
-// import AboutAuthor from '@/components/AboutAuthor.vue';
+import AboutAuthor from '@/components/AboutAuthor.vue';
 // import { toRefs, watch, inject } from 'vue';
 
 // export default {
@@ -25,6 +25,7 @@ import PanelLooping from '@/components/PanelLooping.vue';
 </script>
 <template lang="pug">
 #panel
+  AboutAuthor
   PanelPlayer
   PanelMods
   PanelTempo
@@ -36,8 +37,16 @@ import PanelLooping from '@/components/PanelLooping.vue';
 #panel {
   display: flex;
   justify-content: space-around;
-  font-family: 'Courier New', Courier, monospace;
+  font-family: "Courier New", Courier, monospace;
 }
-
+#icon-container {
+  display: flex;
+  justify-content: space-evenly;
+}
+#about {
+  padding: 10px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-around;
+}
 </style>
-

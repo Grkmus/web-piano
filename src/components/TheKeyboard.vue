@@ -1,4 +1,4 @@
-<template lang='pug'>
+<template lang="pug">
 #keyboard(ref="keyboard")
   octave(
     v-for='k, i in octaveAmount'
@@ -35,23 +35,23 @@ export default {
     this.keyWidth = this.octaveWidth / 12;
 
     window.addEventListener('note-on', (e) => {
-      console.log('Note On: ', e.detail)
-      const {octave, pitch} = e.detail
-      this.$refs.octaves[octave - 1].$refs[pitch].pressKey()
-    })
+      console.log('Note On: ', e.detail);
+      const { octave, pitch } = e.detail;
+      this.$refs.octaves[octave - 1].$refs[pitch].pressKey();
+    });
 
     window.addEventListener('note-off', (e) => {
-      console.log('Note Off: ', e.detail)
-      const {octave, pitch} = e.detail
-      this.$refs.octaves[octave - 1].$refs[pitch].releaseKey()
-    })
+      console.log('Note Off: ', e.detail);
+      const { octave, pitch } = e.detail;
+      this.$refs.octaves[octave - 1].$refs[pitch].releaseKey();
+    });
   },
 };
 </script>
 
 <style>
 #keyboard {
-  display:flex;
+  display: flex;
   margin-top: -5px;
   margin-bottom: 0px;
 }

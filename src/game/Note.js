@@ -1,77 +1,95 @@
-import { Sprite, Graphics } from 'pixi.js';
+import { Sprite, SCALE_MODES, MSAA_QUALITY, Rectangle } from 'pixi.js';
+import { SmoothGraphics as Graphics } from '@pixi/graphics-smooth';
 import Engine from './Engine';
 const LOWEST_KEY = 24;
 
 export default class Note extends Sprite {
   constructor(note, i) {
     super();
-    this.note = note
+    this.note = note;
     const { midi, durationTicks, ticks } = note;
-    this.engine = Engine.instance
-    this.pixi = Engine.instance.pixi
-    this.w = (this.pixi.screen.width / 7) / 12;
+    this.engine = Engine.instance;
+    this.pixi = Engine.instance.pixi;
+    this.w = this.pixi.screen.width / 7 / 12;
     this.h = durationTicks;
-    this.hand = i === 1 ? 'left' : 'right'
+    this.hand = i === 1 ? 'left' : 'right';
     this.x = (midi - LOWEST_KEY + 1) * this.w;
     this.y = -ticks;
     this.isNoteOn = false;
     this.isPlayed = false;
     this.hitPosition = 0;
     this.anchor.set(1, 1);
-    this.defaultTexture = i === 1 ? this.generateTexture(0xf51616) : this.generateTexture(0x00FF00) 
+    this.defaultTexture =
+      i === 1 ? this.generateTexture(0xf51616) : this.generateTexture(0x00ff00);
     this.disabledTexture = this.generateTexture(0x8b95a6);
-    this.noteOnTexture = this.generateTexture(0x2F329F);
+    this.noteOnTexture = this.generateTexture(0x2f329f);
     this.texture = this.defaultTexture;
   }
 
   update(hitPosition) {
     this.hitPosition = hitPosition;
-    if (this.noteOffCheck()) { 
-      if (this.isNoteOn) { this.noteOff() }
-      else return
+    if (this.noteOffCheck()) {
+      if (this.isNoteOn) {
+        this.noteOff();
+      } else return;
     }
-    if (this.noteOnCheck()) { this.noteOn(); }
-    this.handEnableCheck()
+    if (this.noteOnCheck()) {
+      this.noteOn();
+    }
+    this.handEnableCheck();
   }
 
   generateTexture(color) {
     const thing = new Graphics();
-    thing.beginFill(color, 0.5);
+    thing.beginFill(color, 1, true);
     thing.drawRoundedRect(0, 0, this.w, this.h, 10);
     return this.pixi.renderer.generateTexture(thing, {
-      resolution: 1,
+      resolution: window.devicePixelRatio,
+      scaleMode: SCALE_MODES.NEAREST,
+      multisample: MSAA_QUALITY.HIGH,
     });
   }
 
-  
   noteOnCheck() {
-    return this.hitPosition <= this.position.y && this.hitPosition >= this.position.y - this.height
+    return (
+      this.hitPosition <= this.position.y &&
+      this.hitPosition >= this.position.y - this.height
+    );
   }
 
-  noteOffCheck() { return this.position.y - this.height >= this.hitPosition }
+  noteOffCheck() {
+    return this.position.y - this.height >= this.hitPosition;
+  }
 
   noteOn() {
     if (!this.isNoteOn) {
       this.texture = this.noteOnTexture;
-      const { octave, pitch, midi } = this.note
-      const event = new CustomEvent('note-on', { detail: { octave, pitch, midi} })
-      window.dispatchEvent(event)
+      const { octave, pitch, midi } = this.note;
+      const event = new CustomEvent('note-on', {
+        detail: { octave, pitch, midi },
+      });
+      window.dispatchEvent(event);
       this.isNoteOn = true;
     }
   }
-  
+
   noteOff() {
-    const { octave, pitch, midi } = this.note
-    const event = new CustomEvent('note-off', { detail: { octave, pitch, midi } })
-    window.dispatchEvent(event)
+    const { octave, pitch, midi } = this.note;
+    const event = new CustomEvent('note-off', {
+      detail: { octave, pitch, midi },
+    });
+    window.dispatchEvent(event);
     this.isNoteOn = false;
   }
 
   handEnableCheck() {
-    if (this.engine.leftHand && this.hand === 'left' || this.engine.rightHand && this.hand === 'right') {
-      this.texture = this.defaultTexture  
+    if (
+      (this.engine.leftHand && this.hand === 'left') ||
+      (this.engine.rightHand && this.hand === 'right')
+    ) {
+      this.texture = this.defaultTexture;
     } else {
-      this.texture = this.disabledTexture  
+      this.texture = this.disabledTexture;
     }
   }
 

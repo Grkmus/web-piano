@@ -1,5 +1,5 @@
-import Engine from "./Engine"
-import Song from "./Song"
+import Engine from './Engine'
+import Song from './Song'
 
 export default function initialize(view) {
   return new Promise(resolve => {
