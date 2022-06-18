@@ -11,7 +11,7 @@ export default {
   props: {
     velocity: Number,
     note: String,
-    midiNumber: Number
+    midiNumber: Number,
   },
   data() {
     return {
@@ -19,7 +19,7 @@ export default {
     };
   },
   mounted() {
-    window.addEventListener('reset', this.releaseKey)
+    window.addEventListener('reset', this.releaseKey);
   },
 
   methods: {

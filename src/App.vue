@@ -36,6 +36,11 @@ export default defineComponent({
 
 <style>
 
+@media screen and (max-height: 992px) {
+  body {
+    font-size: 2vh;
+  }
+}
 
 html, body {
   min-height: 100vh;

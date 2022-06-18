@@ -8,11 +8,13 @@ import AboutAuthor from '@/components/AboutAuthor.vue';
 
 <template lang="pug">
 #panel
-  AboutAuthor
+  h2
+    a(href='/') Web Piano
   PanelPlayer
   PanelMods
   PanelTempo
   PanelLooping
+  AboutAuthor
 
 </template>
 
@@ -21,6 +23,9 @@ import AboutAuthor from '@/components/AboutAuthor.vue';
   display: flex;
   justify-content: space-around;
   font-family: "Courier New", Courier, monospace;
+  align-items: center;
+  border: medium dashed green;
+  margin: 1px;
 }
 #icon-container {
   display: flex;

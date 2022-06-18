@@ -15,9 +15,9 @@ export default {
     };
   },
   async mounted() {
-    initialize(this.$refs.scene).then(engine => {
-      this.$emit('app-ready', engine)
-    })
+    initialize(this.$refs.scene).then((engine) => {
+      this.$emit('app-ready', engine);
+    });
   },
 };
 </script>
