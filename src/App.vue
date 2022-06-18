@@ -58,7 +58,7 @@ html, body {
 #game {
   display: grid;
   grid-template-columns: 1fr 1fr 1fr 1fr;
-  grid-template-rows: 10vh 70vh 20vh;
+  grid-template-rows: 15vh 65vh 20vh;
   grid-template-areas:
     "panel panel panel panel"
     "sheet sheet sheet sheet"

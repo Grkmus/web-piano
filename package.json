@@ -16,9 +16,12 @@
     "@pixi/graphics-smooth": "^0.0.29",
     "@tonejs/midi": "^2.0.28",
     "@tonejs/piano": "^0.2.1",
+    "events": "^3.3.0",
     "pixi.js": "^6.4.2",
     "pug": "^3.0.2",
-    "vue": "^3.2.36"
+    "tone": "^14.7.77",
+    "vue": "^3.2.36",
+    "webmidi": "^2.5.1"
   },
   "devDependencies": {
     "@vitejs/plugin-vue": "^2.3.3",

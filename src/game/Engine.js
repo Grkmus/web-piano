@@ -1,7 +1,7 @@
 import { Application, Text, TextStyle, Container } from 'pixi.js';
 import { bpm2px } from '../utils/helpers';
 import _ from 'lodash';
-import EventEmitter from '@/game/EventEmitter';
+import EventFactory from '@/game/EventFactory';
 const style = new TextStyle({
   fontFamily: 'monospace',
   fontSize: 36,
@@ -19,10 +19,11 @@ const style = new TextStyle({
   lineJoin: 'round',
 });
 
-export default class Engine extends EventEmitter {
+export default class Engine extends EventFactory {
   constructor(view) {
     if (Engine.instance == null) {
       super()
+      // this.piano = piano
       this.pixi = new Application({
         view,
         resizeTo: view,
