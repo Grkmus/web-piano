@@ -48,7 +48,7 @@ export default class Engine extends EventEmitter {
     const notes = await song.init();
     this.currentSong = song;
     this.tempo = this.currentSong.data.header.tempos[0].bpm;
-    // this.emit('tempoChange')
+    this.emit('tempoChange', Math.round(this.tempo))
     this.pixi.stage.removeChild(this.notesContainer);
     this.notesContainer.removeChildren();
     this.notesContainer.addChild(...notes);
