@@ -8,7 +8,7 @@ import initialize from '@/game/Sketch.js';
 
 export default {
   name: 'TheSheet',
-  emits: 'engine-ready',
+  emits: ['engine-ready'],
   data() {
     return {
       noteContainers: null,

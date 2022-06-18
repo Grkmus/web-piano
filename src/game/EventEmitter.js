@@ -19,12 +19,15 @@ export default class EventEmitter {
   }
   
   emit(name, data) {
-    if (!this._events[name]) {
-      throw new Error(`Can't emit an event. Event "${name}" doesn't exits.`);
+    try {
+      if (!this._events[name])
+        throw new Error(`Can't emit an event. Event "${name}" doesn't exits.`);
+      this._events[name].forEach(fireCallbacks);
+    } catch (error) {
+      console.warn(error)      
     }
     const fireCallbacks = (callback) => {
       callback(data);
     };
-    this._events[name].forEach(fireCallbacks);
   }
 }

@@ -18,7 +18,6 @@
 
 <script>
 import { inject, ref } from 'vue';
-import { readFile } from '@/utils/helpers';
 import { Midi } from '@tonejs/midi';
 import Song from '@/game/Song';
 
@@ -29,10 +28,12 @@ export default {
     const engine = inject('engine');
     const isPlaying = ref(false);
     const selectedSong = ref('Mozart - Rondo Alla Turca');
-    const file = ref(null)
-    const reader = ref(new FileReader())
+    const file = ref(null);
+    const reader = ref(new FileReader());
 
-    return { engine, isPlaying, selectedSong, reader, file };
+    return {
+      engine, isPlaying, selectedSong, reader, file,
+    };
   },
   mounted() {
     this.reader.addEventListener('load', (e) => {
@@ -43,14 +44,14 @@ export default {
     });
 
     this.reader.addEventListener('onerror', () => {
-      throw new Error('Some error happened while reading the file')
+      throw new Error('Some error happened while reading the file');
     });
 
     this.reader.addEventListener('loadend', (e) => {
       this.file = new Midi(e.target.result);
-      const song = new Song(this.file)
-      console.log(this.engine)
-      this.engine.placeSong(song)
+      const song = new Song(this.file);
+      console.log(this.engine);
+      this.engine.placeSong(song);
     });
   },
 
@@ -75,11 +76,11 @@ export default {
     },
     loadFile() {
       // triggers the load event!
-      console.log('loading the file')
+      console.log('loading the file');
       this.isPlaying = false;
       // this.file = readFile()
       this.reader.readAsArrayBuffer(this.$refs.filereader.files[0]);
-      const rawFileName = this.$refs.filereader.files[0].name;
+      // const rawFileName = this.$refs.filereader.files[0].name;
       // console.log(rawFileName)
     },
   },
