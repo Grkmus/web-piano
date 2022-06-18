@@ -1,6 +1,7 @@
 import { Application, Text, TextStyle, Container } from 'pixi.js';
 import { bpm2px } from '../utils/helpers';
 import _ from 'lodash';
+import EventEmitter from '@/game/EventEmitter';
 const style = new TextStyle({
   fontFamily: 'monospace',
   fontSize: 36,
@@ -18,9 +19,10 @@ const style = new TextStyle({
   lineJoin: 'round',
 });
 
-export default class Engine {
+export default class Engine extends EventEmitter {
   constructor(view) {
     if (Engine.instance == null) {
+      super()
       this.pixi = new Application({
         view,
         resizeTo: view,
@@ -36,16 +38,21 @@ export default class Engine {
       this.basicText.y = 10;
       this.loopFunc = null;
       this.pixi.stage.addChild(this.basicText);
+      this.pixi.ticker.add(() => this.gameLoop());
     }
     return Engine.instance;
   }
   async placeSong(song) {
+    console.log('placing the song')
+    this.stop()
     const notes = await song.init();
     this.currentSong = song;
     this.tempo = this.currentSong.data.header.tempos[0].bpm;
+    // this.emit('tempoChange')
+    this.pixi.stage.removeChild(this.notesContainer);
+    this.notesContainer.removeChildren();
     this.notesContainer.addChild(...notes);
     this.pixi.stage.addChild(this.notesContainer);
-    this.pixi.ticker.add(() => this.gameLoop());
     this.pixi.ticker.stop();
   }
   start() { this.pixi.ticker.start(); }

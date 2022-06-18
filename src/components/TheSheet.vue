@@ -8,7 +8,7 @@ import initialize from '@/game/Sketch.js';
 
 export default {
   name: 'TheSheet',
-  emits: 'app-ready',
+  emits: 'engine-ready',
   data() {
     return {
       noteContainers: null,
@@ -16,7 +16,7 @@ export default {
   },
   async mounted() {
     initialize(this.$refs.scene).then((engine) => {
-      this.$emit('app-ready', engine);
+      this.$emit('engine-ready', engine);
     });
   },
 };

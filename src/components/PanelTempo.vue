@@ -18,9 +18,14 @@ export default {
     const engine = inject('engine');
     return { engine, tempo: ref(120) };
   },
+  // mounted() {
+  //   this.engine.on('tempoChange', () => {
+  //     console.log('tempo is changed')
+  //   })
+  // },
   watch: {
     tempo(newVal) {
-      this.engine.value.tempoChange(newVal);
+      this.engine.tempoChange(newVal);
     },
   },
 };

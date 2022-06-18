@@ -13,13 +13,15 @@ export default defineComponent({
   },
   setup() {
     const engine = ref({});
+    const isEngineReady = ref(false)
     provide('engine', engine);
-    return { engine };
+    return { engine, isEngineReady };
   },
   methods: {
     assingApp(engine) {
       console.log('The engine is ready', engine);
-      this.engine.value = engine;
+      this.engine = engine;
+      this.isEngineReady = true
       window.engine = engine
     },
   },
@@ -28,9 +30,9 @@ export default defineComponent({
 
 <template lang="pug">
 #game
-  ThePanel
-  TheSheet(@app-ready="assingApp")
-  TheKeyboard
+  ThePanel(v-if="isEngineReady")
+  TheSheet(@engine-ready="assingApp")
+  TheKeyboard(v-if="isEngineReady")
 
 </template>
 

@@ -26,17 +26,17 @@ export default {
   watch: {
     loopEnabled(newVal) {
       if (newVal) {
-        this.engine.value.enableLooping(this.limits);
+        this.engine.enableLooping(this.limits);
       } else {
-        this.engine.value.disableLooping();
+        this.engine.disableLooping();
       }
     },
     limits: {
       handler(newVal) {
         if (newVal) {
-          this.engine.value.enableLooping(this.limits);
+          this.engine.enableLooping(this.limits);
         } else {
-          this.engine.value.disableLooping();
+          this.engine.disableLooping();
         }
       },
       deep: true,
@@ -44,7 +44,7 @@ export default {
   },
   methods: {
     change() {
-      this.engine.value.loop(this.limits);
+      this.engine.loop(this.limits);
     },
   },
 };

@@ -1,11 +1,11 @@
+import { readFile } from '../utils/helpers'
 import Engine from './Engine'
 import Song from './Song'
 
-export default function initialize(view) {
-  return new Promise(resolve => {
-    const engine = new Engine(view)
-    const song = new Song('MozartWolfgangAmadeus_AllaTurcaRondo.midi')
-    engine.placeSong(song)
-    resolve(engine)
-  })
+export default async function initialize(view) {
+  const engine = new Engine(view)
+  const midiFile = await readFile('MozartWolfgangAmadeus_AllaTurcaRondo.midi')
+  const song = new Song(midiFile)
+  engine.placeSong(song)
+  return engine
 }

@@ -45,8 +45,6 @@ export default class Note extends Sprite {
     thing.drawRoundedRect(0, 0, this.w, this.h, 10);
     return this.pixi.renderer.generateTexture(thing, {
       resolution: window.devicePixelRatio,
-      scaleMode: SCALE_MODES.NEAREST,
-      multisample: MSAA_QUALITY.HIGH,
     });
   }
 

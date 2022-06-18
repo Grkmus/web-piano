@@ -28,9 +28,9 @@ export default {
     };
   },
   watch: {
-    mode(newVal) { this.engine.value.mode(newVal); },
-    leftHand(newVal) { this.engine.value.leftHand = newVal; },
-    rightHand(newVal) { this.engine.value.rightHand = newVal; },
+    mode(newVal) { this.engine.mode(newVal); },
+    leftHand(newVal) { this.engine.leftHand = newVal; },
+    rightHand(newVal) { this.engine.rightHand = newVal; },
   },
 };
 </script>
