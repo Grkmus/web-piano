@@ -39,10 +39,11 @@ export default {
 <style scoped>
 
 .pressed {
-  background-color: orangered;
+  box-shadow: 0 5px #666;
+  transform: translateY(4px);
 }
 
-span {
+/* span {
   position: relative;
   top: 80%;
   border-radius: 5px;
@@ -51,5 +52,5 @@ span {
   font: outline;
   font-family: Arial, Helvetica, sans-serif;
   font-weight: bolder;
-}
+} */
 </style>
