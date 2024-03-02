@@ -1,10 +1,13 @@
 <template lang="pug">
-div(v-bind:class='{ pressed: currentVelocity}')
+div(v-bind:class='{ pressed: currentVelocity}' :style=`{"background-color": keyColor}`)
   //- span {{ note }}
 </template>
 
 <script>
 // import piano from '@/game/Piano';
+import { interpolateMagma } from 'd3-scale-chromatic';
+import { scaleSequential } from 'd3-scale';
+import { color } from 'd3-color';
 
 export default {
   name: 'Key',
@@ -20,6 +23,8 @@ export default {
   },
   mounted() {
     window.addEventListener('reset', this.releaseKey);
+    this.colorScale = scaleSequential().domain([13, 91]).interpolator(interpolateMagma);
+    this.keyColor = color(this.colorScale(this.midiNumber));
   },
 
   methods: {

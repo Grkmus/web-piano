@@ -6,6 +6,7 @@
     :octaveWidth='octaveWidth'
     :keyWidth='keyWidth'
     :key='k'
+    :octave='i'
   )
 </template>
 
