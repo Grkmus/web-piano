@@ -1,5 +1,4 @@
-import { Sprite, SCALE_MODES, MSAA_QUALITY, Rectangle } from 'pixi.js';
-import { SmoothGraphics as Graphics } from '@pixi/graphics-smooth';
+import { Sprite, SCALE_MODES, MSAA_QUALITY, Rectangle, Graphics } from 'pixi.js';
 import Engine from './Engine';
 const LOWEST_KEY = 24;
 
