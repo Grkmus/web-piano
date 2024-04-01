@@ -37,9 +37,25 @@ export default class Engine extends EventFactory {
     this.notesContainer.removeChildren();
     this.notesContainer.addChild(...notes);
     this.pixi.stage.addChild(this.notesContainer);
+    this.addSongTracker(notes)
     this.pixi.ticker.stop();
   }
-  start() { this.pixi.ticker.start(); }
+  addSongTracker(notes) {
+    // const maxY = Math.max(...notes.map(note => -note.y))
+    const ratio = notes[notes.length - 1].note.ticks / window.innerWidth
+    notes.forEach(note => {
+      const mhing = new Graphics();
+      mhing.roundRect(-note.y / ratio, note.note.midi *2 - 100, note.h/8, note.w/8, 10);
+      mhing.fill(0x8b95a6)
+      this.songTrackContainer.addChild(mhing);
+    });
+    const cursor = new Graphics()
+
+    this.pixi.stage.addChild(this.songTrackContainer);
+  }
+  start() { 
+    this.pixi.ticker.start();
+  }
   pause() {
     this.pixi.ticker.stop();
   }
