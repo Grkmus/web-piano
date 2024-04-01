@@ -1,40 +1,23 @@
-import { Application, Text, TextStyle, Container } from 'pixi.js';
+import { Text, Container, Graphics } from 'pixi.js';
 import { bpm2px } from '../utils/helpers';
 import _ from 'lodash';
 import EventFactory from '@/game/EventFactory';
-const style = new TextStyle({
-  fontFamily: 'monospace',
-  fontSize: 36,
-  fontWeight: 'bold',
-  fill: ['#ffffff'], // gradient
-  stroke: '#4a1850',
-  strokeThickness: 5,
-  dropShadow: true,
-  dropShadowColor: '#000000',
-  dropShadowBlur: 4,
-  // dropShadowAngle: Math.PI / 6,
-  dropShadowDistance: 6,
-  wordWrap: true,
-  wordWrapWidth: 440,
-  lineJoin: 'round',
-});
 
 export default class Engine extends EventFactory {
-  constructor(view) {
+  constructor(app) {
     if (Engine.instance == null) {
       super()
-      // this.piano = piano
-      this.pixi = new Application({
-        view,
-        resizeTo: view,
-      });
+      this.pixi = app
       this.currentSong = null;
       this.notesContainer = new Container();
       this.tempo = null;
       this.leftHand = true;
       this.rightHand = true;
       Engine.instance = this;
-      this.basicText = new Text('0', style);
+      this.basicText = new Text({text:'0', style: {
+        fill: 'white',
+        stroke: { color: '#4a1850', width: 5, join: 'round' },
+      }});
       this.basicText.x = 50;
       this.basicText.y = 10;
       this.loopFunc = null;

@@ -1,7 +1,10 @@
-import { Sprite, SCALE_MODES, MSAA_QUALITY, Rectangle, Graphics } from 'pixi.js';
+import { interpolateMagma } from 'd3-scale-chromatic';
+import { scaleSequential } from 'd3-scale';
+import { color } from 'd3-color';
+import { Sprite, SCALE_MODES, MSAA_QUALITY, Rectangle, Color, Graphics} from 'pixi.js';
 import Engine from './Engine';
 const LOWEST_KEY = 24;
-
+const colorScale = scaleSequential().domain([24, 107]).interpolator(interpolateMagma);
 export default class Note extends Sprite {
   constructor(note, i) {
     super();
@@ -18,8 +21,7 @@ export default class Note extends Sprite {
     this.isPlayed = false;
     this.hitPosition = 0;
     this.anchor.set(1, 1);
-    this.defaultTexture =
-      i === 1 ? this.generateTexture(0xf51616) : this.generateTexture(0x00ff00);
+    this.defaultTexture = this.generateTexture(color(colorScale(midi)).formatHex());
     this.disabledTexture = this.generateTexture(0x8b95a6);
     this.noteOnTexture = this.generateTexture(0x2f329f);
     this.texture = this.defaultTexture;
@@ -39,9 +41,9 @@ export default class Note extends Sprite {
   }
 
   generateTexture(color) {
-    const thing = new Graphics();
-    thing.beginFill(color, 1, true);
-    thing.drawRoundedRect(0, 0, this.w, this.h, 10);
+    const thing = new Graphics()
+      .roundRect(0, 0, this.w, this.h, 10)
+      .fill(color);
     return this.pixi.renderer.generateTexture(thing, {
       resolution: window.devicePixelRatio,
     });
