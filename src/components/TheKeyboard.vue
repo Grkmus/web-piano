@@ -14,12 +14,14 @@ import Octave from './KeyOctave.vue';
 import WebMidi from 'webmidi';
 import piano from '@/game/Piano';
 import keyboardMapping from '@/utils/keyboardMapping'
+import generateParticle from '@/game/Effects'
 
 export default {
   name: 'TheKeyboard',
   components: {
     Octave,
   },
+  inject: ['engine'],
   props: {
     octaveAmount: {
       type: Number,
@@ -32,7 +34,8 @@ export default {
       octaveWidth: null,
       keyWidth: null,
       availableInputs: null,
-      selectedInput: null
+      selectedInput: null,
+      particleFunctions: {}
     };
   },
   mounted() {
@@ -49,13 +52,27 @@ export default {
       if (e.repeat) return
       console.log('Note On: ', e);
       // const { octave, pitch, midi } = e.detail;
-      piano.keyDown({ midi: keyboardMapping[e.key] });
+      const midi = keyboardMapping[e.key] 
+      piano.keyDown({midi});
+      const particleContainer = this.engine.value.particleContainer
+      console.log(particleContainer)
+      const particle = generateParticle(particleContainer, {x: midi * this.engine.value.pixi.screen.width / 7 / 12, y: 300})
+      // particle.emitNow()
+      function particleLoop(deltaMS) {
+        particle.update(deltaMS * 0.001);
+      }
+      this.particleFunctions[midi] = () => particleLoop(this.engine.value.pixi.ticker.deltaMS)
+      this.engine.value.pixi.ticker.add(this.particleFunctions[midi])
+      console.log(particle)
       // this.$refs.octaves[octave - 1].$refs[pitch].pressKey();
     });
 
     window.addEventListener('keyup', (e) => {
       console.log('Note Off: ', e);
-      piano.keyUp({ midi: keyboardMapping[e.key] });
+      const midi = keyboardMapping[e.key] 
+      piano.keyUp({ midi });
+      this.engine.value.pixi.ticker.remove(this.particleFunctions[midi])
+
       // this.$refs.octaves[octave - 1].$refs[pitch].pressKey();
     });
 

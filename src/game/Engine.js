@@ -2,6 +2,7 @@ import { Application, Text, TextStyle, Container } from 'pixi.js';
 import { bpm2px } from '../utils/helpers';
 import _ from 'lodash';
 import EventFactory from '@/game/EventFactory';
+import generateParticle from '@/game/Effects'
 const style = new TextStyle({
   fontFamily: 'monospace',
   fontSize: 36,
@@ -19,6 +20,7 @@ const style = new TextStyle({
   lineJoin: 'round',
 });
 
+
 export default class Engine extends EventFactory {
   constructor(view) {
     if (Engine.instance == null) {
@@ -30,6 +32,7 @@ export default class Engine extends EventFactory {
       });
       this.currentSong = null;
       this.notesContainer = new Container();
+      this.particleContainer = new Container();
       this.tempo = null;
       this.leftHand = true;
       this.rightHand = true;
@@ -39,7 +42,10 @@ export default class Engine extends EventFactory {
       this.basicText.y = 10;
       this.loopFunc = null;
       this.pixi.stage.addChild(this.basicText);
+      this.pixi.stage.addChild(this.particleContainer);
+      this.emitter = generateParticle(this.particleContainer, {x: 100, y:100})
       this.pixi.ticker.add(() => this.gameLoop());
+      this.pixi.ticker.add(() => this.gameLoop2());
     }
     return Engine.instance;
   }
@@ -101,11 +107,15 @@ export default class Engine extends EventFactory {
   }
   gameLoop() {
     this.notesContainer.y += bpm2px(this.tempo, this.pixi.ticker.deltaMS);
+    // this.emitter.update(this.pixi.ticker.deltaMS * 0.001);
     this.basicText.text = Math.round(this.notesContainer.y);
     const hitPosition = -this.notesContainer.y + this.pixi.screen.height;
     for (let i = this.notesContainer.children.length - 1; i >= 0; i -= 1) {
       const note = this.notesContainer.getChildAt(i);
       note.update(hitPosition);
     }
+  }
+  gameLoop2() {
+    this.emitter.update(this.pixi.ticker.deltaMS * 0.001);
   }
 }

@@ -11,7 +11,7 @@ export default class Song {
   }
   init() {
     const notes = this.data.tracks.reduce(
-      (prev, current, i) => [...prev, ...current.notes.map((note) => new Note(note, i))], []
+      (prev, current, i) => [...prev, ...current.notes.slice(0, 100).map((note) => new Note(note, i))], []
     );
     this.notes = notes
     return this.notes
@@ -19,7 +19,7 @@ export default class Song {
 
   reset() {
     this.notes = this.data.tracks.reduce(
-      (prev, current) => [...prev, ...current.notes.map((note) => new Note(note, this.pixi))], []
+      (prev, current) => [...prev, ...current.notes.slice(0, 100).map((note) => new Note(note, this.pixi))], []
     );
   }
 

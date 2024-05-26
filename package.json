@@ -14,6 +14,7 @@
     "@fortawesome/free-solid-svg-icons": "^6.1.1",
     "@fortawesome/vue-fontawesome": "^3.0.0-5",
     "@pixi/graphics-smooth": "^0.0.29",
+    "@pixi/particle-emitter": "^5.0.7",
     "@tonejs/midi": "^2.0.28",
     "@tonejs/piano": "^0.2.1",
     "events": "^3.3.0",
