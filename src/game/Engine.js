@@ -26,10 +26,10 @@ export default class Engine extends EventFactory {
     }
     return Engine.instance;
   }
-  async placeSong(song) {
+  placeSong(song) {
     console.log('placing the song')
     this.stop()
-    const notes = await song.init();
+    const notes = song.init();
     this.currentSong = song;
     this.tempo = this.currentSong.data.header.tempos[0].bpm;
     this.emit('tempoChange', Math.round(this.tempo))

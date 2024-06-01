@@ -9,17 +9,22 @@
       option(label='Canon in D' value='Canon in D')
       option(label='Mozart - Rondo Alla Turca' value='Mozart - Rondo Alla Turca')
   .controls
-    font-awesome-icon.control(@click='stepBackward' icon='step-backward')
-    font-awesome-icon.control(v-if='isPlaying' @click='pause' icon='pause')
-    font-awesome-icon.control(v-else @click='play' icon='play')
-    font-awesome-icon.control(@click='stop' icon='stop')
-    font-awesome-icon.control(@click='stepForward' icon='step-forward')
+    button(:disabled="!checkPianoLoaded")
+      font-awesome-icon.control(@click='stepBackward' icon='step-backward')
+    button(:disabled="!checkPianoLoaded")
+      font-awesome-icon.control(v-if='isPlaying' @click='pause' icon='pause')
+      font-awesome-icon.control(v-else @click='play' icon='play')
+    button(:disabled="!checkPianoLoaded")
+      font-awesome-icon.control(@click='stop' icon='stop')
+    button(:disabled="!checkPianoLoaded")
+      font-awesome-icon.control(@click='stepForward' icon='step-forward')
 </template>
 
 <script>
 import { inject, ref } from 'vue';
 import { Midi } from '@tonejs/midi';
 import Song from '@/game/Song';
+import Piano from '@/game/Piano'
 
 export default {
   name: 'PanelPlayer',
@@ -30,12 +35,17 @@ export default {
     const selectedSong = ref('Mozart - Rondo Alla Turca');
     const file = ref(null);
     const reader = ref(new FileReader());
+    const checkPianoLoaded = ref(false)
 
     return {
-      engine, isPlaying, selectedSong, reader, file,
+      engine, isPlaying, selectedSong, reader, file,checkPianoLoaded
     };
   },
   mounted() {
+    Piano.load().then(() => {
+      console.log('loaded!');
+      this.checkPianoLoaded = true
+    });
     this.reader.addEventListener('load', (e) => {
       // debugger;
       console.log('reading file', e.target.result);
