@@ -4,13 +4,11 @@ div(v-bind:class='{ pressed: currentVelocity}' :style=`{"background-color": keyC
 </template>
 
 <script>
-// import piano from '@/game/Piano';
-import { interpolateMagma } from 'd3-scale-chromatic';
-import { scaleSequential } from 'd3-scale';
 import { color } from 'd3-color';
+import { colorScale } from '../game/Note';
 
 export default {
-  name: 'Key',
+  name: 'KeyComponent',
   props: {
     velocity: Number,
     note: String,
@@ -23,8 +21,7 @@ export default {
   },
   mounted() {
     window.addEventListener('reset', this.releaseKey);
-    this.colorScale = scaleSequential().domain([13, 91]).interpolator(interpolateMagma);
-    this.keyColor = color(this.colorScale(this.midiNumber));
+    this.keyColor = color(colorScale(this.midiNumber));
   },
 
   methods: {

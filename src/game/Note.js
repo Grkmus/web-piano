@@ -21,10 +21,14 @@ export default class Note extends Sprite {
     this.isPlayed = false;
     this.hitPosition = 0;
     this.anchor.set(1, 1);
-    this.defaultTexture = this.generateTexture(color(colorScale(midi)).formatHex());
+    this.colorize()
     this.disabledTexture = this.generateTexture(0x8b95a6);
     this.noteOnTexture = this.generateTexture(0x2f329f);
     this.texture = this.defaultTexture;
+  }
+
+  colorize() {
+    this.defaultTexture = this.generateTexture(color(colorScale(this.note.midi)).formatHex());
   }
 
   update(hitPosition) {
@@ -110,3 +114,5 @@ export default class Note extends Sprite {
     }
   }
 }
+
+export {colorScale}

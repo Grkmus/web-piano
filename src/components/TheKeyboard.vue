@@ -1,12 +1,12 @@
 <template lang="pug">
 #keyboard(ref="keyboard")
   octave(
-    v-for='k, i in octaveAmount'
+    v-for='k in octaves'
     ref="octaves"
     :octaveWidth='octaveWidth'
     :keyWidth='keyWidth'
     :key='k'
-    :octave='i'
+    :octave='k'
   )
 </template>
 
@@ -15,6 +15,7 @@ import Octave from './KeyOctave.vue';
 import WebMidi from 'webmidi';
 import piano from '@/game/Piano';
 import keyboardMapping from '@/utils/keyboardMapping'
+import _ from 'lodash'
 
 export default {
   name: 'TheKeyboard',
@@ -26,6 +27,10 @@ export default {
       type: Number,
       default: 7,
     },
+    startingOctave: {
+      type: Number,
+      default: 2
+    }
   },
   data() {
     return {
@@ -35,6 +40,11 @@ export default {
       availableInputs: null,
       selectedInput: null
     };
+  },
+  computed: {
+    octaves() {
+      return _.range(this.startingOctave, this.startingOctave + this.octaveAmount)
+    }
   },
   mounted() {
     WebMidi.enable(() => {

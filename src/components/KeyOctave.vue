@@ -1,19 +1,19 @@
 <template lang="pug">
 .octave(:style='{width: `${octaveWidth}px`}')
   .white-keys
-    key.white-key(:style='{ width: `${whiteKeyWidth}px`}' ref='C' key='C' note='C' :midiNumber="octave * 12 + 1")
+    key.white-key(:style='{ width: `${whiteKeyWidth}px`}' ref='C' key='C' note='C' :midiNumber="octave * 12 + 0")
     key.white-key(:style='{ width: `${whiteKeyWidth}px`}' ref='D' key='D' note='D' :midiNumber="octave * 12 + 2")
-    key.white-key(:style='{ width: `${whiteKeyWidth}px`}' ref='E' key='E' note='E' :midiNumber="octave * 12 + 3")
-    key.white-key(:style='{ width: `${whiteKeyWidth}px`}' ref='F' key='F' note='F' :midiNumber="octave * 12 + 4")
-    key.white-key(:style='{ width: `${whiteKeyWidth}px`}' ref='G' key='G' note='G' :midiNumber="octave * 12 + 5")
-    key.white-key(:style='{ width: `${whiteKeyWidth}px`}' ref='A' key='A' note='A' :midiNumber="octave * 12 + 6")
-    key.white-key(:style='{ width: `${whiteKeyWidth}px`}' ref='B' key='B' note='B' :midiNumber="octave * 12 + 7")
+    key.white-key(:style='{ width: `${whiteKeyWidth}px`}' ref='E' key='E' note='E' :midiNumber="octave * 12 + 4")
+    key.white-key(:style='{ width: `${whiteKeyWidth}px`}' ref='F' key='F' note='F' :midiNumber="octave * 12 + 5")
+    key.white-key(:style='{ width: `${whiteKeyWidth}px`}' ref='G' key='G' note='G' :midiNumber="octave * 12 + 7")
+    key.white-key(:style='{ width: `${whiteKeyWidth}px`}' ref='A' key='A' note='A' :midiNumber="octave * 12 + 9")
+    key.white-key(:style='{ width: `${whiteKeyWidth}px`}' ref='B' key='B' note='B' :midiNumber="octave * 12 + 11")
   .black-keys
-    key.black-key(:style='{ width: `${keyWidth}px`, left:`${2 + keyWidth}px`}' ref='C#' key='C#' note='C#')
-    key.black-key(:style='{ width: `${keyWidth}px`, left:`${4 + keyWidth * 3}px`}' ref='D#' key='D#' note='D#')
-    key.black-key(:style='{ width: `${keyWidth}px`, left:`${6 + keyWidth* 6}px`}' ref='F#' key='F#' note='F#')
-    key.black-key(:style='{ width: `${keyWidth}px`, left:`${4 + keyWidth * 8}px`}' ref='G#' key='G#' note='G#')
-    key.black-key(:style='{ width: `${keyWidth}px`, left:`${keyWidth * 10}px`}' ref='A#' key='A#' note='A#')
+    key.black-key(:style='{ width: `${keyWidth}px`, left:`${2 + keyWidth}px`}' ref='C#' key='C#' note='C#' :midiNumber="octave * 12 + 1")
+    key.black-key(:style='{ width: `${keyWidth}px`, left:`${4 + keyWidth * 3}px`}' ref='D#' key='D#' note='D#' :midiNumber="octave * 12 + 3")
+    key.black-key(:style='{ width: `${keyWidth}px`, left:`${6 + keyWidth* 6}px`}' ref='F#' key='F#' note='F#' :midiNumber="octave * 12 + 6")
+    key.black-key(:style='{ width: `${keyWidth}px`, left:`${4 + keyWidth * 8}px`}' ref='G#' key='G#' note='G#' :midiNumber="octave * 12 + 8")
+    key.black-key(:style='{ width: `${keyWidth}px`, left:`${keyWidth * 10}px`}' ref='A#' key='A#' note='A#' :midiNumber="octave * 12 + 10")
 </template>
 
 <script>
