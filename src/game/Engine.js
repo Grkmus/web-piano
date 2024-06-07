@@ -46,8 +46,8 @@ export default class Engine extends EventFactory {
   stop() {
     this.pause();
     this.notesContainer.y = 0;
-    this.pixi.ticker.update();
     window.dispatchEvent(new CustomEvent('reset'));
+    this.pixi.render()
   }
   enableLooping(limits) {
     window.dispatchEvent(new CustomEvent('reset'));

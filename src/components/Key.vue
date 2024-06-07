@@ -21,7 +21,11 @@ export default {
   },
   mounted() {
     window.addEventListener('reset', this.releaseKey);
-    this.keyColor = color(colorScale(this.midiNumber));
+  },
+  computed: {
+    keyColor() {
+      return color(colorScale(this.midiNumber));
+    }
   },
 
   methods: {

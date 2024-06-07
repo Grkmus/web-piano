@@ -9,15 +9,15 @@
       option(label='Canon in D' value='Canon in D')
       option(label='Mozart - Rondo Alla Turca' value='Mozart - Rondo Alla Turca')
   .controls
-    button(:disabled="!checkPianoLoaded")
-      font-awesome-icon.control(@click='stepBackward' icon='step-backward')
-    button(:disabled="!checkPianoLoaded")
-      font-awesome-icon.control(v-if='isPlaying' @click='pause' icon='pause')
-      font-awesome-icon.control(v-else @click='play' icon='play')
-    button(:disabled="!checkPianoLoaded")
-      font-awesome-icon.control(@click='stop' icon='stop')
-    button(:disabled="!checkPianoLoaded")
-      font-awesome-icon.control(@click='stepForward' icon='step-forward')
+    button(:disabled="!checkPianoLoaded" @click='stepBackward')
+      font-awesome-icon.control(icon='step-backward')
+    button(:disabled="!checkPianoLoaded" @click='playPause')
+      font-awesome-icon.control(v-if='isPlaying' icon='pause')
+      font-awesome-icon.control(v-else icon='play')
+    button(:disabled="!checkPianoLoaded" @click='stop')
+      font-awesome-icon.control(icon='stop')
+    button(:disabled="!checkPianoLoaded" @click='stepForward')
+      font-awesome-icon.control(icon='step-forward')
 </template>
 
 <script>
@@ -66,6 +66,9 @@ export default {
   },
 
   methods: {
+    playPause() {
+      this.isPlaying === true ? this.pause() : this.play() 
+    },
     play() {
       this.isPlaying = true;
       this.engine.start();
