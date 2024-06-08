@@ -1,7 +1,7 @@
 import { interpolateMagma } from 'd3-scale-chromatic';
 import { scaleSequential } from 'd3-scale';
 import { color } from 'd3-color';
-import { Sprite, SCALE_MODES, MSAA_QUALITY, Rectangle, Color, Graphics} from 'pixi.js';
+import { Sprite, Graphics} from 'pixi.js';
 import Engine from './Engine';
 const LOWEST_KEY = 24;
 const colorScale = scaleSequential().domain([24, 107]).interpolator(interpolateMagma);
