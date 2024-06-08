@@ -41,7 +41,7 @@ export default class Note extends Sprite {
     if (this.noteOnCheck()) {
       this.noteOn();
     }
-    this.handEnableCheck();
+    this.handEnableCheck() ? this.texture = this.defaultTexture : this.texture = this.disabledTexture;
   }
 
   generateTexture(color) {
@@ -56,7 +56,8 @@ export default class Note extends Sprite {
   noteOnCheck() {
     return (
       this.hitPosition <= this.position.y &&
-      this.hitPosition >= this.position.y - this.height
+      this.hitPosition >= this.position.y - this.height &&
+      this.handEnableCheck()
     );
   }
 
@@ -86,14 +87,10 @@ export default class Note extends Sprite {
   }
 
   handEnableCheck() {
-    if (
+    return (
       (this.engine.leftHand && this.hand === 'left') ||
       (this.engine.rightHand && this.hand === 'right')
-    ) {
-      this.texture = this.defaultTexture;
-    } else {
-      this.texture = this.disabledTexture;
-    }
+    )
   }
 
   pickMode() {
