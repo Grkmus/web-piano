@@ -14,14 +14,7 @@ export default class Engine extends EventFactory {
       this.leftHand = true;
       this.rightHand = true;
       Engine.instance = this;
-      this.basicText = new Text({text:'0', style: {
-        fill: 'white',
-        stroke: { color: '#4a1850', width: 5, join: 'round' },
-      }});
-      this.basicText.x = 50;
-      this.basicText.y = 10;
       this.loopFunc = null;
-      this.pixi.stage.addChild(this.basicText);
       this.pixi.ticker.add(() => this.gameLoop());
     }
     return Engine.instance;
@@ -74,17 +67,18 @@ export default class Engine extends EventFactory {
   stepForward() {
     window.dispatchEvent(new CustomEvent('reset'));
     this.notesContainer.y += 240;
+    this.pixi.render()
   }
   stepBackward() {
     window.dispatchEvent(new CustomEvent('reset'));
     this.notesContainer.y -= 240;
+    this.pixi.render()
   }
   tempoChange(tempo) {
     this.tempo = Number(tempo);
   }
   gameLoop() {
     this.notesContainer.y += bpm2px(this.tempo, this.pixi.ticker.deltaMS);
-    this.basicText.text = Math.round(this.notesContainer.y);
     const hitPosition = -this.notesContainer.y + this.pixi.screen.height;
     for (let i = this.notesContainer.children.length - 1; i >= 0; i -= 1) {
       const note = this.notesContainer.getChildAt(i);
