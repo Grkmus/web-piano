@@ -9,6 +9,11 @@
       //- label(for='right-hand') Right Hand
       input.input(type='checkbox' name='left-hand' value='rightHand' v-model='rightHand')
       font-awesome-icon(icon="hand")
+    .row
+      label(for='play-along') Play along
+      input#play-along(type='radio' name='mode' value='playAlong' v-model='mode')
+      label(for='wait-input') Wait for input
+      input#wait-input(type='radio' name='mode' value='waitInput' v-model='mode')
 </template>
 
 <script>
@@ -25,12 +30,13 @@ export default {
     const mode = ref('playAlong');
     const leftHand = ref(true);
     const rightHand = ref(true);
+
     return {
       engine, mode, leftHand, rightHand,
     };
   },
   watch: {
-    mode(newVal) { this.engine.mode(newVal); },
+    mode(newVal) { this.engine.updateMode(newVal); },
     leftHand(newVal) { this.engine.leftHand = newVal; },
     rightHand(newVal) { this.engine.rightHand = newVal; },
   },

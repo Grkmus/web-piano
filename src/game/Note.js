@@ -5,6 +5,7 @@ import { Sprite, Graphics} from 'pixi.js';
 import Engine from './Engine';
 const LOWEST_KEY = 24;
 const colorScale = scaleSequential().domain([24, 107]).interpolator(interpolateMagma);
+const keysToBePressed = new Set()
 export default class Note extends Sprite {
   constructor(note, i) {
     super();
@@ -33,13 +34,10 @@ export default class Note extends Sprite {
 
   update(hitPosition) {
     this.hitPosition = hitPosition;
-    if (this.noteOffCheck()) {
-      if (this.isNoteOn) {
-        this.noteOff();
-      } else return;
-    }
+    if (this.noteOffCheck()) this.noteOff();
     if (this.noteOnCheck()) {
-      this.noteOn();
+      this.noteOn()
+      this.pickMode()
     }
     this.handEnableCheck() ? this.texture = this.defaultTexture : this.texture = this.disabledTexture;
   }
@@ -78,6 +76,7 @@ export default class Note extends Sprite {
   }
 
   noteOff() {
+    if (!this.isNoteOn) return
     const { octave, pitch, midi } = this.note;
     const event = new CustomEvent('note-off', {
       detail: { octave, pitch, midi },
@@ -94,22 +93,11 @@ export default class Note extends Sprite {
   }
 
   pickMode() {
-    if (this.settings.WAIT_FOR_INPUT_MODE.checked && this.isEnabled) {
-      console.log('wait for input mode'); //eslint-disable-line
-      // note.isOpen = true;
-      // this.keysToBePressed.add(note.number);
-      // console.log(this.keysToBePressed);
-      // this.pressKeyComponent(note.octave, note.name);
-      // this.$emit('pause');
-    }
-    if (this.settings.PLAY_ALONG_MODE.checked) {
-      console.log('playalong mode'); //eslint-disable-line
-      // note.isOpen = true;
-      // this.$set(this.notes, i, note);
-      // this.noteOn(note, i);
-      // console.log('note started', note, i);
+    if (this.engine.mode === 'waitInput') {
+      keysToBePressed.add(this.note.midi);
+      this.engine.pause()
     }
   }
 }
 
-export {colorScale}
+export {colorScale, keysToBePressed}

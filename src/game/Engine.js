@@ -13,6 +13,7 @@ export default class Engine extends EventFactory {
       this.tempo = null;
       this.leftHand = true;
       this.rightHand = true;
+      this.mode = 'playAlong'
       Engine.instance = this;
       this.loopFunc = null;
       this.pixi.ticker.add(() => this.gameLoop());
@@ -76,6 +77,10 @@ export default class Engine extends EventFactory {
   }
   tempoChange(tempo) {
     this.tempo = Number(tempo);
+  }
+  updateMode(mode) {
+    if (mode === 'playAlong') this.start()
+    this.mode = mode
   }
   gameLoop() {
     this.notesContainer.y += bpm2px(this.tempo, this.pixi.ticker.deltaMS);
