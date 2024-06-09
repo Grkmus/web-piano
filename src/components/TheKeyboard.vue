@@ -58,27 +58,27 @@ export default {
 
     window.addEventListener('keydown', (e) => {
       if (e.repeat) return
-      // console.log('Note On: ', e);
-      // const { octave, pitch, midi } = e.detail;
-      piano.keyDown({ midi: keyboardMapping[e.key] });
-      // this.$refs.octaves[octave - 1].$refs[pitch].pressKey();
+      if (!keyboardMapping[e.key]) return
+      const { octave, pitch, midi } = keyboardMapping[e.key];
+      piano.keyDown({ midi });
+      this.$refs.octaves[octave - 1].$refs[pitch].pressKey();
     });
 
     window.addEventListener('keyup', (e) => {
-      // console.log('Note Off: ', e);
-      piano.keyUp({ midi: keyboardMapping[e.key] });
-      // this.$refs.octaves[octave - 1].$refs[pitch].pressKey();
+      if (!keyboardMapping[e.key]) return
+      const { octave, pitch, midi } = keyboardMapping[e.key]
+      piano.keyUp({ midi });
+      this.$refs.octaves[octave - 1].$refs[pitch].releaseKey();
+
     });
 
     window.addEventListener('note-on', (e) => {
-      // console.log('Note On: ', e.detail);
       const { octave, pitch, midi } = e.detail;
       piano.keyDown({ midi });
       this.$refs.octaves[octave - 1].$refs[pitch].pressKey();
     });
 
     window.addEventListener('note-off', (e) => {
-      // console.log('Note Off: ', e.detail);
       const { octave, pitch, midi } = e.detail;
       piano.keyUp({ midi });
       this.$refs.octaves[octave - 1].$refs[pitch].releaseKey();
