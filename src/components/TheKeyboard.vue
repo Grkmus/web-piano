@@ -15,6 +15,7 @@ import Octave from './KeyOctave.vue';
 import WebMidi from 'webmidi';
 import piano from '@/game/Piano';
 import keyboardMapping from '@/utils/keyboardMapping'
+import { keysToBePressed } from '../game/Note';
 import _ from 'lodash'
 
 export default {
@@ -32,6 +33,7 @@ export default {
       default: 2
     }
   },
+  inject: ['engine'],
   data() {
     return {
       sheetWidth: null,
@@ -57,9 +59,13 @@ export default {
     this.keyWidth = this.octaveWidth / 12;
 
     window.addEventListener('keydown', (e) => {
-      if (e.repeat) return
       if (!keyboardMapping[e.key]) return
       const { octave, pitch, midi } = keyboardMapping[e.key];
+      if (keysToBePressed.has(midi)) {
+        keysToBePressed.delete(midi)
+        this.engine.value.keysBeingPressed.add(midi)
+        this.engine.value.start()
+      }
       piano.keyDown({ midi });
       this.$refs.octaves[octave - 1].$refs[pitch].pressKey();
     });

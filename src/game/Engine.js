@@ -14,6 +14,7 @@ export default class Engine extends EventFactory {
       this.leftHand = true;
       this.rightHand = true;
       this.mode = 'playAlong'
+      this.keysBeingPressed = new Set()
       Engine.instance = this;
       this.loopFunc = null;
       this.pixi.ticker.add(() => this.gameLoop());

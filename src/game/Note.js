@@ -93,8 +93,9 @@ export default class Note extends Sprite {
   }
 
   pickMode() {
-    if (this.engine.mode === 'waitInput') {
+    if (this.engine.mode === 'waitInput' && !this.engine.keysBeingPressed.has(this.note.midi)) {
       keysToBePressed.add(this.note.midi);
+      console.log(this.engine.keysBeingPressed)
       this.engine.pause()
     }
   }
