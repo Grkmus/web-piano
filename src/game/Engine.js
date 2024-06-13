@@ -10,6 +10,7 @@ export default class Engine extends EventFactory {
       this.pixi = app
       this.currentSong = null;
       this.notesContainer = new Container();
+      this.songTrackContainer = new Container()
       this.tempo = null;
       this.leftHand = true;
       this.rightHand = true;
@@ -31,6 +32,7 @@ export default class Engine extends EventFactory {
     this.pixi.stage.removeChild(this.notesContainer);
     this.notesContainer.removeChildren();
     this.notesContainer.addChild(...notes);
+    this.songTrackContainer.addChild(...notes.map(note => note.noteOnTracker(this.currentSong.ratio)))
     this.pixi.stage.addChild(this.notesContainer);
     this.addSongTracker(notes)
     this.pixi.ticker.stop();

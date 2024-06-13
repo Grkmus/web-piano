@@ -29,6 +29,12 @@ export default class Note extends Sprite {
     this.texture = this.defaultTexture;
   }
 
+  noteOnTracker(ratio) {
+    const { octave, pitch, midi } = this.note;
+    return new Graphics()
+      .roundRect(-this.note.y / ratio, midi *2 - 100, this.note.h/8, this.note.w/8, 10)
+      .fill(0x8b95a6)
+  }
   colorize() {
     this.defaultTexture = this.generateTexture(color(colorScale(this.note.midi)).formatHex());
   }
