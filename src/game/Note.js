@@ -4,7 +4,8 @@ import { color } from 'd3-color';
 import { Sprite, Graphics} from 'pixi.js';
 import Engine from './Engine';
 const LOWEST_KEY = 24;
-const colorScale = scaleSequential().domain([24, 107]).interpolator(interpolateMagma);
+const OCTAVE_AMOUNT = 7
+const colorScale = scaleSequential().domain([24, OCTAVE_AMOUNT * 12]).interpolator(interpolateMagma);
 const keysToBePressed = new Set()
 export default class Note extends Sprite {
   constructor(note, i) {
@@ -13,7 +14,7 @@ export default class Note extends Sprite {
     const { midi, durationTicks, ticks } = note;
     this.engine = Engine.instance;
     this.pixi = Engine.instance.pixi;
-    this.w = this.pixi.screen.width / 7 / 12;
+    this.w = this.pixi.screen.width / OCTAVE_AMOUNT / 12;
     this.h = durationTicks;
     this.hand = i === 1 ? 'left' : 'right';
     this.x = (midi - LOWEST_KEY + 1) * this.w;
