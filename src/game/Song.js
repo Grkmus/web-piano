@@ -11,11 +11,11 @@ export default class Song {
     this.ratio = 1
   }
   init() {
+    const ratio = this.data.durationTicks / window.innerWidth
     const notes = this.data.tracks.reduce(
-      (prev, current, i) => [...prev, ...current.notes.map((note) => new Note(note, i))], []
+      (prev, current, i) => [...prev, ...current.notes.map((note) => new Note(note, i, ratio))], []
     );
     this.notes = notes
-    this.ratio = notes[notes.length - 1].note.ticks / window.innerWidth
     return this.notes
   }
 

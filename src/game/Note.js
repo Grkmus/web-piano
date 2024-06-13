@@ -8,7 +8,7 @@ const OCTAVE_AMOUNT = 7
 const colorScale = scaleSequential().domain([24, OCTAVE_AMOUNT * 12]).interpolator(interpolateMagma);
 const keysToBePressed = new Set()
 export default class Note extends Sprite {
-  constructor(note, i) {
+  constructor(note, i, ratio) {
     super();
     this.note = note;
     const { midi, durationTicks, ticks } = note;
@@ -27,14 +27,11 @@ export default class Note extends Sprite {
     this.disabledTexture = this.generateTexture(0x8b95a6);
     this.noteOnTexture = this.generateTexture(0x2f329f);
     this.texture = this.defaultTexture;
-  }
-
-  noteOnTracker(ratio) {
-    const { octave, pitch, midi } = this.note;
-    return new Graphics()
-      .roundRect(-this.note.y / ratio, midi *2 - 100, this.note.h/8, this.note.w/8, 10)
+    this.noteOnTracker = new Graphics()
+      .roundRect(-this.y / ratio, midi *2 - 100, this.h/8, this.w/8, 10)
       .fill(0x8b95a6)
   }
+
   colorize() {
     this.defaultTexture = this.generateTexture(color(colorScale(this.note.midi)).formatHex());
   }
