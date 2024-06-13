@@ -19,6 +19,8 @@ export default class Engine extends EventFactory {
       Engine.instance = this;
       this.loopFunc = null;
       this.pixi.ticker.add(() => this.gameLoop());
+      this.cursor = new Graphics().roundRect(0, 0, 2, 120).fill(0xfffff)
+      this.pixi.stage.addChild(this.cursor)
     }
     return Engine.instance;
   }
@@ -35,6 +37,7 @@ export default class Engine extends EventFactory {
     this.songTrackContainer.addChild(...notes.map(note => note.noteOnTracker))
     this.pixi.stage.addChild(this.notesContainer);
     this.pixi.stage.addChild(this.songTrackContainer);
+    this.cursor.x = -this.pixi.screen.height / this.currentSong.ratio
     this.pixi.ticker.stop();
     this.pixi.render()
   }
@@ -91,6 +94,7 @@ export default class Engine extends EventFactory {
   }
   gameLoop() {
     this.notesContainer.y += bpm2px(this.tempo, this.pixi.ticker.deltaMS);
+    this.cursor.x += bpm2px(this.tempo, this.pixi.ticker.deltaMS) / this.currentSong.ratio
     const hitPosition = -this.notesContainer.y + this.pixi.screen.height;
     for (let i = this.notesContainer.children.length - 1; i >= 0; i -= 1) {
       const note = this.notesContainer.getChildAt(i);
