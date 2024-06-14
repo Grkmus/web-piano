@@ -33,12 +33,10 @@ export default {
     const engine = inject('engine');
     const isPlaying = ref(false);
     const selectedSong = ref('Mozart - Rondo Alla Turca');
-    const file = ref(null);
-    const reader = ref(new FileReader());
     const checkPianoLoaded = ref(false)
-
+    const fileContent = ref(null)
     return {
-      engine, isPlaying, selectedSong, reader, file,checkPianoLoaded
+      engine, isPlaying, selectedSong, checkPianoLoaded, fileContent
     };
   },
   mounted() {
@@ -46,25 +44,7 @@ export default {
       console.log('loaded!');
       this.checkPianoLoaded = true
     });
-    this.reader.addEventListener('load', (e) => {
-      // debugger;
-      console.log('reading file', e.target.result);
-      // this.midiJson = new Midi(e.target.result);
-      // this.rawBpm = this.midiJson.header.tempos[0].bpm;
-    });
-
-    this.reader.addEventListener('onerror', () => {
-      throw new Error('Some error happened while reading the file');
-    });
-
-    this.reader.addEventListener('loadend', (e) => {
-      this.file = new Midi(e.target.result);
-      const song = new Song(this.file);
-      console.log(this.engine);
-      this.engine.placeSong(song);
-    });
   },
-
   methods: {
     playPause() {
       this.isPlaying === true ? this.pause() : this.play() 
@@ -87,14 +67,19 @@ export default {
     stepBackward() {
       this.engine.stepBackward();
     },
-    loadFile() {
-      // triggers the load event!
+    loadFile(event) {
       console.log('loading the file');
       this.isPlaying = false;
-      // this.file = readFile()
-      this.reader.readAsArrayBuffer(this.$refs.filereader.files[0]);
-      // const rawFileName = this.$refs.filereader.files[0].name;
-      // console.log(rawFileName)
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = (e) => {
+          const song = new Song(new Midi(e.target.result));
+          this.engine.placeSong(song);
+        };
+        // readAsArrayBuffer triggers the load event!
+        reader.readAsArrayBuffer(file); // Use readAsText for text files, other methods for different file types
+      }
     },
   },
 };
