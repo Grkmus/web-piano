@@ -1,8 +1,7 @@
-import { Text, Container, Graphics } from 'pixi.js';
+import { Text, Container, Graphics, FillGradient, GraphicsContext, Texture, Sprite } from 'pixi.js';
 import { bpm2px } from '../utils/helpers';
 import _ from 'lodash';
 import EventFactory from '@/game/EventFactory';
-
 export default class Engine extends EventFactory {
   constructor(app) {
     if (Engine.instance == null) {
@@ -32,14 +31,29 @@ export default class Engine extends EventFactory {
     this.tempo = this.currentSong.data.header.tempos[0].bpm;
     this.emit('tempoChange', Math.round(this.tempo))
     this.pixi.stage.removeChild(this.notesContainer);
+    this.pixi.stage.removeChild(this.songTrackContainer);
     this.notesContainer.removeChildren();
+    this.songTrackContainer.removeChildren()
     this.notesContainer.addChild(...notes);
-    this.songTrackContainer.addChild(...notes.map(note => note.noteOnTracker))
+    this.songTrackContainer.addChild(...notes.map(note => this.generateTracker(note, this.currentSong.ratio)))
     this.pixi.stage.addChild(this.notesContainer);
     this.pixi.stage.addChild(this.songTrackContainer);
     this.cursor.x = -this.pixi.screen.height / this.currentSong.ratio
     this.pixi.ticker.stop();
     this.pixi.render()
+    console.log('made it')
+  }
+  generateTracker(note, ratio) {
+    const rect = Sprite.from(Texture.WHITE);
+    rect.width = note.h/8
+    rect.height = note.w/8
+    // const texture = this.pixi.renderer.generateTexture(mhing, {
+    //   resolution: window.devicePixelRatio,
+    // });
+    rect.x = -note.y / ratio
+    rect.y = note.note.midi *2 - 100
+    // test.texture = texture
+    return rect
   }
   start() { 
     this.pixi.ticker.start();

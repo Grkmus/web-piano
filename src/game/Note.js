@@ -23,17 +23,10 @@ export default class Note extends Sprite {
     this.isPlayed = false;
     this.hitPosition = 0;
     this.anchor.set(1, 1);
-    this.colorize()
+    this.defaultTexture = this.generateTexture(color(colorScale(this.note.midi)).formatHex());
     this.disabledTexture = this.generateTexture(0x8b95a6);
     this.noteOnTexture = this.generateTexture(0x2f329f);
     this.texture = this.defaultTexture;
-    this.noteOnTracker = new Graphics()
-      .roundRect(-this.y / ratio, midi *2 - 100, this.h/8, this.w/8, 10)
-      .fill(0x8b95a6)
-  }
-
-  colorize() {
-    this.defaultTexture = this.generateTexture(color(colorScale(this.note.midi)).formatHex());
   }
 
   update(hitPosition) {
