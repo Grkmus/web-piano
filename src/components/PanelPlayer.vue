@@ -74,8 +74,8 @@ export default {
       if (file) {
         const reader = new FileReader();
         reader.onload = (e) => {
-          const song = new Song(new Midi(e.target.result));
-          this.engine.placeSong(song);
+          const midi = new Midi(e.target.result);
+          this.engine.placeSong(midi);
         };
         // readAsArrayBuffer triggers the load event!
         reader.readAsArrayBuffer(file); // Use readAsText for text files, other methods for different file types
