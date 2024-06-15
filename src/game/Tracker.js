@@ -16,6 +16,7 @@ export default class Tracker {
       this.generateCursor(),
       this.generateFrame()
     )
+    this.enableListener()
     return this
   }
 
@@ -57,6 +58,18 @@ export default class Tracker {
       { resolution: window.devicePixelRatio });
     const sprite = new Sprite(frame)
     return sprite
+  }
+
+  enableListener() {
+    this.container.interactive = true
+    this.container.buttonMode = true
+    this.container.on('pointertap', e => {
+      const cursorPosition = e.getLocalPosition(this.container).x
+      const songPosition = cursorPosition / this.horizontalRatio + this.pixi.screen.height
+      this.song.container.y = songPosition
+      this.cursor.x = cursorPosition
+      this.pixi.render()
+    })
   }
 }
   
