@@ -21,7 +21,7 @@ export default class Song {
 
   reset() {
     this.notes = this.data.tracks.reduce(
-      (prev, current) => [...prev, ...current.notes.map((note) => new Note(note, this.pixi))], []
+      (prev, current, i) => [...prev, ...current.notes.map((note) => new Note(note, i, this.ratio))], []
     );
   }
 
