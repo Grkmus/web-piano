@@ -1,7 +1,7 @@
 import { interpolateMagma } from 'd3-scale-chromatic';
 import { scaleSequential } from 'd3-scale';
 import { color } from 'd3-color';
-import { Sprite, Graphics} from 'pixi.js';
+import { Sprite, Graphics, Texture} from 'pixi.js';
 import Engine from './Engine';
 const LOWEST_KEY = 24;
 const OCTAVE_AMOUNT = 7
@@ -9,7 +9,7 @@ const colorScale = scaleSequential().domain([24, OCTAVE_AMOUNT * 12]).interpolat
 const keysToBePressed = new Set()
 export default class Note extends Sprite {
   constructor(note, i, ratio) {
-    super();
+    super(Texture.WHITE);
     this.note = note;
     const { midi, durationTicks, ticks } = note;
     this.engine = Engine.instance;
@@ -23,29 +23,23 @@ export default class Note extends Sprite {
     this.isPlayed = false;
     this.hitPosition = 0;
     this.anchor.set(1, 1);
-    this.defaultTexture = this.generateTexture(color(colorScale(this.note.midi)).formatHex());
-    this.disabledTexture = this.generateTexture(0x8b95a6);
-    this.noteOnTexture = this.generateTexture(0x2f329f);
-    this.texture = this.defaultTexture;
+    this.defaultColor = color(colorScale(this.note.midi)).formatHex();
+    this.disabledColor = 0x8b95a6
+    this.noteOnColor = 0x2f329f;
+    this.tint = this.defaultColor
   }
 
   update(hitPosition) {
+    // We have to set the width and height in here, otherwise it does not work somehow...
+    this.width = this.w;
+    this.height = this.h
     this.hitPosition = hitPosition;
     if (this.noteOffCheck()) this.noteOff();
     if (this.noteOnCheck()) {
       this.noteOn()
       this.pickMode()
     }
-    this.handEnableCheck() ? this.texture = this.defaultTexture : this.texture = this.disabledTexture;
-  }
-
-  generateTexture(color) {
-    const thing = new Graphics()
-      .roundRect(0, 0, this.w, this.h, 10)
-      .fill(color);
-    return this.pixi.renderer.generateTexture(thing, {
-      resolution: window.devicePixelRatio,
-    });
+    this.handEnableCheck() ? this.tint = this.defaultColor : this.tint = this.disabledColor;
   }
 
   noteOnCheck() {
@@ -62,7 +56,7 @@ export default class Note extends Sprite {
 
   noteOn() {
     if (!this.isNoteOn) {
-      this.texture = this.noteOnTexture;
+      this.tint = this.noteOnColor;
       const { octave, pitch, midi } = this.note;
       const event = new CustomEvent('note-on', {
         detail: { octave, pitch, midi },

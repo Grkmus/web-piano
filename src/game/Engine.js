@@ -36,8 +36,8 @@ export default class Engine extends EventFactory {
     this.songTrackContainer.removeChildren()
     this.notesContainer.addChild(...notes);
     this.songTrackContainer.addChild(...notes.map(note => this.generateTracker(note, this.currentSong.ratio)))
-    this.pixi.stage.addChild(this.notesContainer);
     this.pixi.stage.addChild(this.songTrackContainer);
+    this.pixi.stage.addChild(this.notesContainer);
     this.cursor.x = -this.pixi.screen.height / this.currentSong.ratio
     this.pixi.ticker.stop();
     this.pixi.render()
@@ -47,12 +47,9 @@ export default class Engine extends EventFactory {
     const rect = Sprite.from(Texture.WHITE);
     rect.width = note.h/8
     rect.height = note.w/8
-    // const texture = this.pixi.renderer.generateTexture(mhing, {
-    //   resolution: window.devicePixelRatio,
-    // });
+    rect.tint = 'gray'
     rect.x = -note.y / ratio
     rect.y = note.note.midi *2 - 100
-    // test.texture = texture
     return rect
   }
   start() { 
