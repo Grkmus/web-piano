@@ -8,10 +8,11 @@ const OCTAVE_AMOUNT = 7
 const colorScale = scaleSequential().domain([24, OCTAVE_AMOUNT * 12]).interpolator(interpolateMagma);
 const keysToBePressed = new Set()
 export default class Note extends Sprite {
-  constructor(note, i, ratio) {
+  constructor(note, i) {
     super(Texture.WHITE);
     this.note = note;
     const { midi, durationTicks, ticks } = note;
+    this.midi = midi
     this.engine = Engine.instance;
     this.pixi = Engine.instance.pixi;
     this.w = this.pixi.screen.width / OCTAVE_AMOUNT / 12;

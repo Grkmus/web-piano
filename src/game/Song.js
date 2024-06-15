@@ -7,12 +7,12 @@ export default class Song {
 
   constructor(data) {
     const {durationTicks, tracks, header} = data
+    this.durationTicks = durationTicks
     this.header = header
     this.tempo = header.tempos[0].bpm;
     this.tracks = tracks
     this.container = new Container();
     this.pixi = Engine.instance.pixi
-    this.ratio = durationTicks / window.innerWidth
     tracks.forEach((track, i) => {
       track.notes.forEach(note => {
         this.container.addChild(new Note(note, i, this.ratio))

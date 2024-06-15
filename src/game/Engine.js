@@ -86,7 +86,7 @@ export default class Engine extends EventFactory {
   }
   gameLoop() {
     this.song.container.y += bpm2px(this.tempo, this.pixi.ticker.deltaMS);
-    this.tracker.cursor.x += bpm2px(this.tempo, this.pixi.ticker.deltaMS) / this.song.ratio
+    this.tracker.cursor.x += bpm2px(this.tempo, this.pixi.ticker.deltaMS) * this.tracker.horizontalRatio
     const hitPosition = -this.song.container.y + this.pixi.screen.height;
     for (let i = this.song.notes.length - 1; i >= 0; i -= 1) {
       const note = this.song.notes[i];
