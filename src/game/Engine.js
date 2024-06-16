@@ -45,25 +45,22 @@ export default class Engine extends EventFactory {
     window.dispatchEvent(new CustomEvent('reset'));
     this.pixi.render()
   }
-  enableLooping(limits) {
+  enableLooping(limits, callback) {
+    console.log('enabling looping', limits)
     window.dispatchEvent(new CustomEvent('reset'));
-    this.song.container.removeChildren();
-    const newNotes = this.currentSong.notes.filter((note) => {
-      return Math.abs(note.y) > limits.min && Math.abs(note.y) < limits.max;
-    });
-    if (!_.isEmpty(newNotes)) this.song.container.addChild(...newNotes);
-    this.song.container.y = limits.min - this.pixi.screen.height;
-    this.loopFunc = () => this.loopInArea(limits);
+    this.song.container.y = limits.min;
+    if (this.loopFunc) this.pixi.ticker.remove(this.loopFunc);
+    this.loopFunc = () => this.loopInArea(limits, callback);
     this.pixi.ticker.add(this.loopFunc);
   }
   disableLooping() {
-    this.song.container.removeChildren();
-    this.song.container.addChild(...this.currentSong.notes);
+    console.log('disabling looping')
     this.pixi.ticker.remove(this.loopFunc);
   }
-  loopInArea(limits) {
-    if (this.song.container.y >= limits.max + this.pixi.screen.height) {
+  loopInArea(limits, callback) {
+    if (this.song.container.y >= limits.max) {
       this.song.container.y = limits.min;
+      callback()
       window.dispatchEvent(new CustomEvent('reset'));
     }
   }

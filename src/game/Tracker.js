@@ -1,15 +1,17 @@
 import { Container, Graphics, Sprite, Texture } from 'pixi.js';
 import Engine from './Engine';
+import drag from './drag';
 
 export default class Tracker {
   constructor(song) {
-    this.trackerHeight = 200
+    this.trackerHeight = 100
     this.framePadding = 10
     this.song = song
     this.cursor = new Sprite(Texture.WHITE)
     this.horizontalRatio = window.innerWidth / song.durationTicks 
     this.verticalRatio = this.getVerticalRatio()
     this.pixi = Engine.instance.pixi
+    this.engine = Engine.instance
     this.container = new Container()
     this.container.addChild(
       ...song.notes.map(note => this.generateTrackerSprite(note)),
@@ -17,6 +19,7 @@ export default class Tracker {
       this.generateFrame()
     )
     this.enableListener()
+    this.isDragging = false;
     return this
   }
 
@@ -44,7 +47,7 @@ export default class Tracker {
 
   generateCursor() {
     this.cursor.width = 2
-    this.cursor.height = this.trackerHeight
+    this.cursor.height = this.trackerHeight + this.framePadding
     this.tint = 0xfffff
     this.cursor.x = -this.pixi.screen.height * this.horizontalRatio
     return this.cursor
@@ -63,7 +66,9 @@ export default class Tracker {
   enableListener() {
     this.container.interactive = true
     this.container.buttonMode = true
+    drag(this)
     this.container.on('pointertap', e => {
+      if (this.isDragging) return
       const cursorPosition = e.getLocalPosition(this.container).x
       const songPosition = cursorPosition / this.horizontalRatio + this.pixi.screen.height
       this.song.container.y = songPosition
