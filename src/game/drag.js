@@ -90,5 +90,4 @@ export default function drag(tracker) {
     tracker.container.on('pointerdown', onDragStart);
     tracker.container.on('pointermove', onDragMove);
     tracker.container.on('pointerup', onDragEnd);
-    tracker.container.on('pointerupoutside', onDragEnd);
 }
