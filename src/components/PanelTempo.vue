@@ -30,3 +30,15 @@ export default {
   },
 };
 </script>
+
+<style>
+.panel input[type="range"] {
+    margin-right: 10px;
+}
+.panel input[type="number"] {
+    width: 50px;
+    padding: 5px;
+    border-radius: 5px;
+    border: none;
+}
+</style>

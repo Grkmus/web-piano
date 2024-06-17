@@ -56,7 +56,9 @@ export default class Tracker {
   generateFrame() {
     const frame = this.pixi.renderer.generateTexture(
       new Graphics()
-      .roundRect(0, 0, this.pixi.screen.width, this.trackerHeight + this.framePadding, 10)
+      .lineTo(0, this.trackerHeight + this.framePadding)
+      .stroke('black')
+      .lineTo(this.pixi.screen.width, this.trackerHeight + this.framePadding)
       .stroke('gray'),
       { resolution: window.devicePixelRatio });
     const sprite = new Sprite(frame)

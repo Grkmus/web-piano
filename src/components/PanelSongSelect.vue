@@ -1,15 +1,13 @@
 <template lang='pug'>
 .panel
-  .controls
-    button.control(:disabled="!checkPianoLoaded" @click='stepBackward')
-      font-awesome-icon(icon='step-backward')
-    button.control(:disabled="!checkPianoLoaded" @click='playPause')
-      font-awesome-icon(v-if='isPlaying' icon='pause')
-      font-awesome-icon(v-else icon='play')
-    button.control(:disabled="!checkPianoLoaded" @click='stop')
-      font-awesome-icon(icon='stop')
-    button.control(:disabled="!checkPianoLoaded" @click='stepForward')
-      font-awesome-icon(icon='step-forward')
+  .container
+    label(for='filereader')  Chose a midi file
+    input.control#filereader(@change='loadFile' type='file' name='filereader' ref='filereader')
+  .container
+    label(for='songs') Or pick a predefined song:
+    select.control.navbar-select#songs(v-model='selectedSong' name='songs')
+      option(label='Canon in D' value='Canon in D')
+      option(label='Mozart - Rondo Alla Turca' value='Mozart - Rondo Alla Turca')
 </template>
 
 <script>
@@ -19,7 +17,7 @@ import Song from '@/game/Song';
 import Piano from '@/game/Piano'
 
 export default {
-  name: 'PanelPlayer',
+  name: 'PanelSongSelect',
   emits: ['song-change'],
   setup() {
     const engine = inject('engine');
