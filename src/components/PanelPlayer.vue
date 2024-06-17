@@ -1,6 +1,6 @@
 <template lang='pug'>
 .panel
-  .controls
+  .controls(v-if="checkPianoLoaded")
     button.control(:disabled="!checkPianoLoaded" @click='stepBackward')
       font-awesome-icon(icon='step-backward')
     button.control(:disabled="!checkPianoLoaded" @click='playPause')
@@ -10,6 +10,9 @@
       font-awesome-icon(icon='stop')
     button.control(:disabled="!checkPianoLoaded" @click='stepForward')
       font-awesome-icon(icon='step-forward')
+  .controls(v-else)
+    img(src="/loading.gif" style="height:40px")
+    span Loading samples
 </template>
 
 <script>
@@ -88,6 +91,7 @@ export default {
   border-radius: 5px;
 }
 .controls {
+  width: 200px;
   display: flex;
   justify-content: space-around;
 }
