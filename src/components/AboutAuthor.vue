@@ -1,9 +1,7 @@
 <template lang="pug">
 #about
-  label About The Author
+  h4 About The Author
   #icon-container
-    a(target='_blank' href='https://www.buymeacoffee.com/tosungo' id='buy-me-a-coffee')
-      img(src='https://cdn.buymeacoffee.com/buttons/v2/default-orange.png' alt='Buy Me A Coffee' style="height: 40px")
     a(target='_blank' href='https://github.com/Grkmus')
       font-awesome-icon(:icon="['fab', 'github']")
     a(target='_blank' href='https://twitter.com/tosungo')
@@ -19,11 +17,18 @@ export default {
   name: 'AboutAuthor',
 };
 </script>
-
 <style>
-#icon-container {
+#about {
+  margin-top: 10px;
   display: flex;
-  align-items: center;
-  
+  gap: 10px;
+}
+#about a {
+    color: #fff;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+#about a:hover {
+    color: #ea6900;
 }
 </style>

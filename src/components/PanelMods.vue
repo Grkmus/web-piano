@@ -1,6 +1,6 @@
 <template lang='pug'>
 .panel
-  label Mod
+  h4 Mode
   .column
     .row
       //- label(for='left-hand') Left Hand
