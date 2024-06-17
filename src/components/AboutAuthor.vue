@@ -17,11 +17,3 @@ export default {
   name: 'AboutAuthor',
 };
 </script>
-
-<style>
-#icon-container {
-  display: flex;
-  align-items: center;
-  
-}
-</style>

@@ -76,7 +76,7 @@ export default {
 </script>
 
 <style>
-.panel {
+/* .panel {
   display: flex;
   flex-direction: column;
   text-align: center;
@@ -105,5 +105,5 @@ export default {
     margin: 0 5px;
     border: none;
     border-radius: 5px;
-}
+} */
 </style>

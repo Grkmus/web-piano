@@ -3,7 +3,7 @@ import PanelSongSelect from '@/components/PanelSongSelect.vue';
 import PanelPlayer from '@/components/PanelPlayer.vue';
 import PanelMods from '@/components/PanelMods.vue';
 import PanelTempo from '@/components/PanelTempo.vue';
-import PanelLooping from '@/components/PanelLooping.vue';
+import BuyMeACoffee from '@/components/BuyMeACoffee.vue';
 import AboutAuthor from '@/components/AboutAuthor.vue';
 </script>
 
@@ -15,20 +15,17 @@ import AboutAuthor from '@/components/AboutAuthor.vue';
   PanelPlayer
   PanelMods
   PanelTempo
-  PanelLooping
+  BuyMeACoffee
   AboutAuthor
 
 </template>
 
 <style>
-body {
-    margin: 0;
-    /* font-family: 'Lato', sans-serif; */
-}
+
 #panel {
   display: flex;
   justify-content: space-around;
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Google fonts';
   align-items: center;
   /* border: medium solid red; */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
