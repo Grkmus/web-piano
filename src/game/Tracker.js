@@ -78,5 +78,8 @@ export default class Tracker {
       this.pixi.render()
     })
   }
+  reset() {
+    this.cursor.x = -this.pixi.screen.height * this.horizontalRatio
+  }
 }
   

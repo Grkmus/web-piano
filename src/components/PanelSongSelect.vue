@@ -13,50 +13,20 @@
 <script>
 import { inject, ref } from 'vue';
 import { Midi } from '@tonejs/midi';
-import Song from '@/game/Song';
-import Piano from '@/game/Piano'
 
 export default {
   name: 'PanelSongSelect',
   emits: ['song-change'],
   setup() {
     const engine = inject('engine');
-    const isPlaying = ref(false);
     const selectedSong = ref('Mozart - Rondo Alla Turca');
-    const checkPianoLoaded = ref(false)
     const fileContent = ref(null)
     return {
-      engine, isPlaying, selectedSong, checkPianoLoaded, fileContent
+      engine, selectedSong, fileContent
     };
   },
-  mounted() {
-    Piano.load().then(() => {
-      console.log('loaded!');
-      this.checkPianoLoaded = true
-    });
-  },
+
   methods: {
-    playPause() {
-      this.isPlaying === true ? this.pause() : this.play() 
-    },
-    play() {
-      this.isPlaying = true;
-      this.engine.start();
-    },
-    stop() {
-      this.isPlaying = false;
-      this.engine.stop();
-    },
-    pause() {
-      this.isPlaying = false;
-      this.engine.pause();
-    },
-    stepForward() {
-      this.engine.stepForward();
-    },
-    stepBackward() {
-      this.engine.stepBackward();
-    },
     loadFile(event) {
       console.log('loading the file');
       this.isPlaying = false;

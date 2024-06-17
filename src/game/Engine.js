@@ -24,7 +24,7 @@ export default class Engine extends EventFactory {
   }
   placeSong(midi) {
     console.log('placing the song')
-    this.stop()
+    this.pause();
     this.pixi.stage.removeChildren();
     this.song = new Song(midi);
     this.tracker = new Tracker(this.song)
@@ -42,6 +42,8 @@ export default class Engine extends EventFactory {
   }
   stop() {
     this.pause();
+    this.song.reset()
+    this.tracker.reset()
     window.dispatchEvent(new CustomEvent('reset'));
     this.pixi.render()
   }

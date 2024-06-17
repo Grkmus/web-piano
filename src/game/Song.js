@@ -15,7 +15,7 @@ export default class Song {
     this.pixi = Engine.instance.pixi
     tracks.forEach((track, i) => {
       track.notes.forEach(note => {
-        this.container.addChild(new Note(note, i, this.ratio))
+        this.container.addChild(new Note(note, i))
       })
     });
     this.notes = this.container.children
@@ -23,9 +23,7 @@ export default class Song {
   }
 
   reset() {
-    this.notes = this.tracks.reduce(
-      (prev, current, i) => [...prev, ...current.notes.map((note) => new Note(note, i, this.ratio))], []
-    );
+    this.container.y = 0
   }
 
 }
