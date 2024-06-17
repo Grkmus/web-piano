@@ -21,21 +21,21 @@ import AboutAuthor from '@/components/AboutAuthor.vue';
 </template>
 
 <style>
-
+body {
+  font-family: 'Poppins', sans-serif;
+}
 #panel {
   display: flex;
   justify-content: space-around;
-  font-family: 'Google fonts';
   align-items: center;
-  /* border: medium solid red; */
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  /* margin: 1px; */
   background-color: #333;
   color: #fff;
   padding: 10px 20px;
 }
 .panel{
   display: flex;
+  font-size: 16px;
   justify-content: space-between;
   align-items: center;
   flex-direction: column;
@@ -46,6 +46,15 @@ import AboutAuthor from '@/components/AboutAuthor.vue';
     text-decoration: none;
     font-size: 24px;
     font-weight: bold;
+}
+.control {
+  background-color: #444;
+  border: none;
+  color: #fff;
+  padding: 5px;
+  margin: 0 5px;
+  cursor: pointer;
+  border-radius: 5px;
 }
 #icon-container {
   display: flex;

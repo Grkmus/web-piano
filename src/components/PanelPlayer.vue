@@ -77,14 +77,7 @@ export default {
 };
 </script>
 
-<style>
-/* .panel {
-  display: flex;
-  flex-direction: column;
-  text-align: center;
-  font-family: 'Roboto', sans-serif;
-}
-
+<style scoped>
 .control {
   background-color: #444;
   border: none;
@@ -103,9 +96,9 @@ export default {
 }
 
 .navbar-select {
-    padding: 10px;
+    padding: 10px;  
     margin: 0 5px;
     border: none;
     border-radius: 5px;
-} */
+}
 </style>

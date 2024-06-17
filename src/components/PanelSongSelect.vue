@@ -1,7 +1,7 @@
 <template lang='pug'>
 .panel
   .container
-    label(for='filereader')  Chose a midi file
+    label(for='filereader')  Chose a midi file:
     input.control#filereader(@change='loadFile' type='file' name='filereader' ref='filereader')
   .container
     label(for='songs') Or pick a predefined song:
@@ -76,6 +76,9 @@ export default {
 </script>
 
 <style>
+.container {
+  padding: 5px;
+}
 /* .panel {
   display: flex;
   flex-direction: column;
@@ -83,15 +86,7 @@ export default {
   font-family: 'Roboto', sans-serif;
 }
 
-.control {
-  background-color: #444;
-  border: none;
-  color: #fff;
-  padding: 10px;
-  margin: 0 5px;
-  cursor: pointer;
-  border-radius: 5px;
-}
+
 .controls {
   display: flex;
   justify-content: space-around;

@@ -1,6 +1,6 @@
 <template lang="pug">
 #about
-  label About The Author
+  h4 About The Author
   #icon-container
     a(target='_blank' href='https://github.com/Grkmus')
       font-awesome-icon(:icon="['fab', 'github']")
@@ -17,3 +17,18 @@ export default {
   name: 'AboutAuthor',
 };
 </script>
+<style>
+#about {
+  margin-top: 10px;
+  display: flex;
+  gap: 10px;
+}
+#about a {
+    color: #fff;
+    text-decoration: none;
+    transition: color 0.3s;
+}
+#about a:hover {
+    color: #ea6900;
+}
+</style>

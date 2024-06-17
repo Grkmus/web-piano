@@ -1,8 +1,9 @@
 <template lang="pug">
 .panel
-  label(for='tempo') Tempo
+  h4(for='tempo') Tempo (bpm)
   input#tempo(v-model='tempo' type='range' name='tempo' min='1' max='240' step='1')
-  input#tempo(v-model='tempo' type='number' name='tempoInput')
+  input#tempo(v-model='tempo' type='number' name='tempoInput') 
+
 </template>
 
 <script>
@@ -32,13 +33,14 @@ export default {
 </script>
 
 <style>
-/* .panel input[type="range"] {
+.panel input[type="range"] {
     margin-right: 10px;
 }
 .panel input[type="number"] {
     width: 50px;
+    margin-top: 5px;
     padding: 5px;
     border-radius: 5px;
     border: none;
-} */
+}
 </style>
