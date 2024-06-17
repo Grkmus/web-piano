@@ -23,21 +23,15 @@ export default function drag(tracker) {
     const selectedArea = new Graphics()
       .rect(0, 0, 1, tracker.trackerHeight + tracker.framePadding)
       .fill({alpha: 0.5})
-    // tracker.container.addChild(selectedArea)
-    // tracker.container.mask = mask1
-    // tracker.container.addChild(firstCursor)
+
     // Function to start dragging
     function onDragStart(event) {
-      console.log('drag started')
       dragging = true;
       dragData = event.data;
       dragOffset = new Point();
       dragData.getLocalPosition(tracker.container, dragOffset);
       firstCursor.x = dragData.x
       selectedArea.x = dragData.x
-      // tracker.container.addChild(firstCursor)
-      // Optional: make the tracker.container semi-transparent while dragging
-      // tracker.pixi.ticker.update()
       tracker.container.addChild(firstCursor)
       tracker.container.addChild(selectedArea)
       tracker.isDragging = false;
@@ -47,17 +41,19 @@ export default function drag(tracker) {
     function onDragMove() {
       tracker.isDragging = true;
       if (dragging) {
-        // tracker.engine.disableLooping()
         tracker.container.alpha = 0.5; 
-        console.log('dragging')
-        console.log(tracker.pixi.stage.children)
         tracker.container.addChild(secondCursor)
         const newPosition = dragData.getLocalPosition(tracker.container.parent);
         secondCursor.x = newPosition.x
-        selectedArea.width = newPosition.x - firstCursor.x
+        if (secondCursor.x < firstCursor.x) {
+          selectedArea.x = secondCursor.x
+          selectedArea.width = firstCursor.x - secondCursor.x
+        }
+        if (secondCursor.x > firstCursor.x) {
+          selectedArea.x = firstCursor.x
+          selectedArea.width = secondCursor.x - firstCursor.x
+        }
         tracker.pixi.render()
-        // tracker.container.x = newPosition.x - dragOffset.x;
-        // tracker.container.y = newPosition.y - dragOffset.y;
       }
     }
     
