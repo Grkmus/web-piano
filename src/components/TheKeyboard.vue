@@ -98,5 +98,6 @@ export default {
   display: flex;
   margin-top: -5px;
   margin-bottom: 0px;
+  background-color: black;
 }
 </style>
