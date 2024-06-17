@@ -11,9 +11,9 @@
       font-awesome-icon(icon="hand")
     .row
       label(for='play-along') Play along
-      input#play-along(type='radio' name='mode' value='playAlong' v-model='mode')
+      input.mode#play-along(type='radio' name='mode' value='playAlong' v-model='mode')
       label(for='wait-input') Wait for input
-      input#wait-input(type='radio' name='mode' value='waitInput' v-model='mode')
+      input.mode#wait-input(type='radio' name='mode' value='waitInput' v-model='mode')
 </template>
 
 <script>
@@ -60,5 +60,8 @@ export default {
 }
 .input {
   margin: 5px;
+}
+.mode {
+  margin: 10px;
 }
 </style>

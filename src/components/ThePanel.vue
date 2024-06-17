@@ -1,4 +1,5 @@
 <script setup>
+import PanelMidiInput from '@/components/PanelMidiInput.vue';
 import PanelSongSelect from '@/components/PanelSongSelect.vue';
 import PanelPlayer from '@/components/PanelPlayer.vue';
 import PanelMods from '@/components/PanelMods.vue';
@@ -15,6 +16,7 @@ import AboutAuthor from '@/components/AboutAuthor.vue';
   PanelPlayer
   PanelMods
   PanelTempo
+  PanelMidiInput
   BuyMeACoffee
   AboutAuthor
 
