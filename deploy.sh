@@ -20,6 +20,6 @@ git commit -m 'deploy'
 # git push -f git@github.com:<USERNAME>/<USERNAME>.github.io.git master
 
 # if you are deploying to https://<USERNAME>.github.io/<REPO>
-git push -f git@github.com:grkmus/web-piano.git main:production
+git push -f https://$GITHUB_TOKEN@github.com/Grkmus/web-piano.git master:production
 
 cd -
