@@ -37,6 +37,8 @@ export default {
     margin-right: 10px;
 }
 .panel input[type="number"] {
+    font-size: smaller;
+    height: 20px;
     width: 50px;
     margin-top: 5px;
     padding: 5px;

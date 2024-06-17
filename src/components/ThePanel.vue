@@ -37,7 +37,7 @@ body {
 }
 .panel{
   display: flex;
-  font-size: 16px;
+  font-size: 12px;
   justify-content: space-between;
   align-items: center;
   flex-direction: column;
@@ -46,14 +46,14 @@ body {
 #panel a {
     color: #fff;
     text-decoration: none;
-    font-size: 24px;
+    font-size: 16px;
     font-weight: bold;
 }
 .control {
   background-color: #444;
   border: none;
   color: #fff;
-  padding: 5px;
+  padding: 2px;
   margin: 0 5px;
   cursor: pointer;
   border-radius: 5px;

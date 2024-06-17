@@ -5,7 +5,7 @@
     input.control#filereader(@change='loadFile' type='file' name='filereader' ref='filereader')
   .container
     label(for='songs') Or pick a predefined song:
-    select.control.navbar-select#songs(v-model='selectedSong' name='songs')
+    select.control#songs(v-model='selectedSong' name='songs')
       option(label='Canon in D' value='Canon in D')
       option(label='Mozart - Rondo Alla Turca' value='Mozart - Rondo Alla Turca')
 </template>
@@ -47,28 +47,7 @@ export default {
 
 <style>
 .container {
-  padding: 5px;
-}
-/* .panel {
-  display: flex;
-  flex-direction: column;
-  text-align: center;
-  font-family: 'Roboto', sans-serif;
+  padding: 2px;
 }
 
-
-.controls {
-  display: flex;
-  justify-content: space-around;
-}
-.control:hover {
-    background-color: #555;
-}
-
-.navbar-select {
-    padding: 10px;
-    margin: 0 5px;
-    border: none;
-    border-radius: 5px;
-} */
 </style>
