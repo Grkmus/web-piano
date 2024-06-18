@@ -56,18 +56,27 @@ export default {
 }
 
 .row {
-  /* display: flex;
-  justify-content: flex-start;
-  width: 100%; */
   display: flex;
   align-items: center;
   justify-content: space-between;
-  /* margin: 10px 0; */
   width: 100%;
 }
 .row label {
   margin-right: 10px;
   white-space: nowrap;
 }
+#filereader {
+  font-size: 1em;
+  cursor: pointer;
+}
+#songs {
+  font-size: 1em;
+  background-color: #333;
+  border: solid #4f4f4f;
+  border-radius: 5px;
+  color: white;
+  /* box-shadow: 0 4px 8px 
+  rgba(0, 0, 0, 0.5); */
 
+}
 </style>

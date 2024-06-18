@@ -1,16 +1,17 @@
 <template lang='pug'>
 PanelTemplate(title="Mode")
   template(v-slot)
+    font-awesome-icon#left-hand-icon(icon="hand")
+    input.input(type='checkbox' name='left-hand' value='leftHand' v-model='leftHand')
+    input.input(type='checkbox' name='left-hand' value='rightHand' v-model='rightHand')
+    font-awesome-icon(icon="hand")
     .row
-      font-awesome-icon#left-hand-icon(icon="hand")
-      input.input(type='checkbox' name='left-hand' value='leftHand' v-model='leftHand')
-      input.input(type='checkbox' name='left-hand' value='rightHand' v-model='rightHand')
-      font-awesome-icon(icon="hand")
-    .row
-      input.mode#play-along(type='radio' name='mode' value='playAlong' v-model='mode')
-      label(for='play-along') Play along
-      input.mode#wait-input(type='radio' name='mode' value='waitInput' v-model='mode')
-      label(for='wait-input') Wait for input
+      .row
+        input.mode#play-along(type='radio' name='mode' value='playAlong' v-model='mode')
+        label(for='play-along') Play along
+      .row
+        input.mode#wait-input(type='radio' name='mode' value='waitInput' v-model='mode')
+        label(for='wait-input') Wait for input
 </template>
 
 <script>
@@ -43,5 +44,11 @@ export default {
 <style>
 #left-hand-icon {
   transform: scale(-1, 1);
+}
+.row {
+  display: flex;
+  flex-direction: row;
+  padding-right: 5px;
+  padding-left: 5px;
 }
 </style>

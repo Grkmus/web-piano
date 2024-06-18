@@ -11,7 +11,7 @@ PanelTemplate(title="Player")
         font-awesome-icon(icon='stop')
       button.control(:disabled="!checkPianoLoaded" @click='stepForward')
         font-awesome-icon(icon='step-forward')
-    .controls(v-else)
+    div(v-else)
       img(src="/loading.gif" style="height:20px")
       div Loading samples
 </template>
