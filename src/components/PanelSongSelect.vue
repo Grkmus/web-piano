@@ -1,21 +1,25 @@
 <template lang='pug'>
-.panel
-  .container
-    label(for='filereader')  Chose a midi file:
-    input.control#filereader(@change='loadFile' type='file' name='filereader' ref='filereader')
-  .container
-    label(for='songs') Or pick a predefined song:
-    select.control#songs(v-model='selectedSong' name='songs')
-      option(label='Canon in D' value='Canon in D')
-      option(label='Mozart - Rondo Alla Turca' value='Mozart - Rondo Alla Turca')
+PanelTemplate(title="Song Select")
+  template(v-slot)
+    .row
+      label(for='filereader')  Chose a midi file:
+      input#filereader(@change='loadFile' type='file' name='filereader' ref='filereader')
+    .row
+      label(for='songs') Or pick a predefined song:
+      select#songs(v-model='selectedSong' name='songs')
+        option(label='Canon in D' value='Canon in D')
+        option(label='Mozart - Rondo Alla Turca' value='Mozart - Rondo Alla Turca')
 </template>
 
 <script>
 import { inject, ref } from 'vue';
 import { Midi } from '@tonejs/midi';
-
+import PanelTemplate from './PanelTemplate.vue';
 export default {
   name: 'PanelSongSelect',
+  components: {
+    PanelTemplate
+  },
   emits: ['song-change'],
   setup() {
     const engine = inject('engine');
@@ -45,9 +49,25 @@ export default {
 };
 </script>
 
-<style>
-.container {
-  padding: 2px;
+<style scoped>
+
+::-webkit-file-upload-button {
+   display: none;
+}
+
+.row {
+  /* display: flex;
+  justify-content: flex-start;
+  width: 100%; */
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  /* margin: 10px 0; */
+  width: 100%;
+}
+.row label {
+  margin-right: 10px;
+  white-space: nowrap;
 }
 
 </style>

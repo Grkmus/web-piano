@@ -67,7 +67,7 @@ export default class Tracker {
 
   enableListener() {
     this.container.interactive = true
-    this.container.buttonMode = true
+    this.container.cursor = 'pointer';
     drag(this)
     this.container.on('pointertap', e => {
       if (this.isDragging) return

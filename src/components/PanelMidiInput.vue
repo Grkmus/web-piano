@@ -1,9 +1,9 @@
 <template lang='pug'>
-.panel(v-if="availableInputs")
-  h4 Midi Input
-  select#midi-inputs(v-if="availableInputs.length > 0" v-model='selectedInput' name='songs')
-    option(:key='input' v-html='input' :value='input' v-for='input in availableInputs')
-  span(v-else) No input available
+PanelTemplate(title="Midi Input")
+  template(v-slot)
+    select#midi-inputs(v-if="availableInputs?.length > 0" v-model='selectedInput' name='songs')
+      option(:key='input' v-html='input' :value='input' v-for='input in availableInputs')
+    span(v-else) No input available
 </template>
 
 <script>

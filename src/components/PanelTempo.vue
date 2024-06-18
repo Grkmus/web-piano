@@ -1,8 +1,9 @@
 <template lang="pug">
-.panel
-  h4(for='tempo') Tempo (bpm)
-  input#tempo(v-model='tempo' type='range' name='tempo' min='1' max='240' step='1')
-  input#tempo(v-model='tempo' type='number' name='tempoInput') 
+PanelTemplate(title="Tempo (bpm)")
+  template(v-slot)
+    .container
+      input#tempo(v-model='tempo' type='range' name='tempo' min='1' max='240' step='1')
+      input#tempo(v-model='tempo' type='number' name='tempoInput') 
 
 </template>
 
@@ -33,16 +34,23 @@ export default {
 </script>
 
 <style>
-.panel input[type="range"] {
-    margin-right: 10px;
+.container {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  text-align: center;
 }
-.panel input[type="number"] {
-    font-size: smaller;
-    height: 20px;
-    width: 50px;
-    margin-top: 5px;
-    padding: 5px;
-    border-radius: 5px;
-    border: none;
+input[type="range"] {
+  margin-right: 10px;
+}
+input[type="number"] {
+  font-size: smaller;
+  height: 20px;
+  width: 50px;
+  margin-top: 5px;
+  padding: 5px;
+  border-radius: 5px;
+  border: none;
 }
 </style>

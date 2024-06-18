@@ -1,28 +1,32 @@
 <template lang='pug'>
-.panel
-  .controls(v-if="checkPianoLoaded")
-    button.control(:disabled="!checkPianoLoaded" @click='stepBackward')
-      font-awesome-icon(icon='step-backward')
-    button.control(:disabled="!checkPianoLoaded" @click='playPause')
-      font-awesome-icon(v-if='isPlaying' icon='pause')
-      font-awesome-icon(v-else icon='play')
-    button.control(:disabled="!checkPianoLoaded" @click='stop')
-      font-awesome-icon(icon='stop')
-    button.control(:disabled="!checkPianoLoaded" @click='stepForward')
-      font-awesome-icon(icon='step-forward')
-  .controls(v-else)
-    img(src="/loading.gif" style="height:40px")
-    span Loading samples
+PanelTemplate(title="Player")
+  template(v-slot)
+    .controls(v-if="checkPianoLoaded")
+      button.control(:disabled="!checkPianoLoaded" @click='stepBackward')
+        font-awesome-icon(icon='step-backward')
+      button.control(:disabled="!checkPianoLoaded" @click='playPause')
+        font-awesome-icon(v-if='isPlaying' icon='pause')
+        font-awesome-icon(v-else icon='play')
+      button.control(:disabled="!checkPianoLoaded" @click='stop')
+        font-awesome-icon(icon='stop')
+      button.control(:disabled="!checkPianoLoaded" @click='stepForward')
+        font-awesome-icon(icon='step-forward')
+    .controls(v-else)
+      img(src="/loading.gif" style="height:20px")
+      div Loading samples
 </template>
 
 <script>
 import { inject, ref } from 'vue';
 import { Midi } from '@tonejs/midi';
-import Song from '@/game/Song';
 import Piano from '@/game/Piano'
+import PanelTemplate from './PanelTemplate.vue';
 
 export default {
   name: 'PanelPlayer',
+  components: {
+    PanelTemplate
+  },
   emits: ['song-change'],
   setup() {
     const engine = inject('engine');
@@ -81,28 +85,22 @@ export default {
 </script>
 
 <style scoped>
+.controls {
+  display: flex;
+  justify-content: space-around;
+}
+
 .control {
   background-color: #444;
   border: none;
   color: #fff;
-  padding: 10px;
+  padding: 7px;
   margin: 0 5px;
   cursor: pointer;
   border-radius: 5px;
 }
-.controls {
-  width: 200px;
-  display: flex;
-  justify-content: space-around;
-}
+
 .control:hover {
     background-color: #555;
-}
-
-.navbar-select {
-    padding: 10px;  
-    margin: 0 5px;
-    border: none;
-    border-radius: 5px;
 }
 </style>

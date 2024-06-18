@@ -46,17 +46,5 @@ export default {
 
 .pressed {
   box-shadow: 0 5px #666;
-  transform: translateY(4px);
 }
-
-/* span {
-  position: relative;
-  top: 80%;
-  border-radius: 5px;
-  padding: 5px;
-  background: rgb(209, 208, 208);
-  font: outline;
-  font-family: Arial, Helvetica, sans-serif;
-  font-weight: bolder;
-} */
 </style>

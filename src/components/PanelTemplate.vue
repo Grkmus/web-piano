@@ -1,20 +1,42 @@
 <template lang='pug'>
-div {{name}}
-  slot
-//- .column.q-ma-xs
-//-   q-card-section.q-pa-sm
-//-     .row.justify-center
-//-       .text-h6 {{name}}
-//-   q-separator(inset)
-//-   q-card-section.q-pa-sm.action-container.row.no-wrap.justify-around.items-center
-//-     slot
+.card
+  .card-title {{ title }}
+  .card-content
+    slot
+
 </template>
 
 <script>
 
 export default {
   props: {
-    name: null,
+    title: null,
   },
 };
 </script>
+
+<style>
+.card {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: space-between;
+  text-align: center;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.5);
+  min-height: 95%;
+  padding: 10px;
+  margin: 10px;
+}
+
+.card-title {
+  font-size: 0.8em;
+  font-weight: bold;
+  margin-bottom: 5px;
+}
+
+.card-content {
+    font-size: 0.75em;
+    /* line-height: 1.5; */
+}
+</style>
