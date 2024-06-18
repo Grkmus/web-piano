@@ -24,11 +24,11 @@ export default {
   gap: 10px;
 }
 #about a {
-    color: #fff;
-    text-decoration: none;
-    transition: color 0.3s;
+  color: #fff;
+  text-decoration: none;
+  transition: color 0.3s;
 }
 #about a:hover {
-    color: #ea6900;
+  color: #ea6900;
 }
 </style>

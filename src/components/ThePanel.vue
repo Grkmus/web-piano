@@ -63,7 +63,7 @@ body {
   justify-content: space-evenly;
 }
 #about {
-  padding: 10px;
+  padding: 5px;
   display: flex;
   flex-direction: column;
   justify-content: space-around;
