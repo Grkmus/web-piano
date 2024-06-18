@@ -4,7 +4,7 @@ import drag from './drag';
 
 export default class Tracker {
   constructor(song) {
-    this.trackerHeight = 100
+    this.trackerHeight = Engine.instance.pixi.screen.height / 8
     this.framePadding = 10
     this.song = song
     this.cursor = new Sprite(Texture.WHITE)
