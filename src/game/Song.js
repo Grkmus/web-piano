@@ -2,6 +2,7 @@ import Note from '@/game/Note';
 import _ from 'lodash';
 import Engine from './Engine';
 import { Container } from 'pixi.js';
+import Tracker from './Tracker';
 
 export default class Song {
 
@@ -19,17 +20,19 @@ export default class Song {
       })
     });
     this.notes = this.container.children
+    this.tracker = new Tracker(this)
     return this
   }
 
   set position(val) {
     this.container.y = val
+    this.tracker.cursor.x = (this.container.y -this.pixi.screen.height) * this.tracker.horizontalRatio
   }
   get position() {
     return this.container.y
   }
   reset() {
-    this.container.y = 0
+    this.position = 0
   }
 
 }

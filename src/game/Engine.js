@@ -10,7 +10,6 @@ export default class Engine extends EventFactory {
       super()
       this.pixi = app
       this.song = null;
-      this.tracker = null
       this.tempo = null;
       this.leftHand = true;
       this.rightHand = true;
@@ -27,8 +26,7 @@ export default class Engine extends EventFactory {
     this.pause();
     this.pixi.stage.removeChildren();
     this.song = new Song(midi);
-    this.tracker = new Tracker(this.song)
-    this.pixi.stage.addChild(this.tracker.container);
+    this.pixi.stage.addChild(this.song.tracker.container);
     this.pixi.stage.addChild(this.song.container);
     this.tempo = this.song.tempo;
     this.emit('tempoChange', Math.round(this.tempo))
@@ -43,7 +41,6 @@ export default class Engine extends EventFactory {
   stop() {
     this.pause();
     this.song.reset()
-    this.tracker.reset()
     window.dispatchEvent(new CustomEvent('reset'));
     this.pixi.render()
   }
@@ -85,7 +82,6 @@ export default class Engine extends EventFactory {
   }
   gameLoop() {
     this.song.position += bpm2px(this.tempo, this.pixi.ticker.deltaMS);
-    this.tracker.cursor.x += bpm2px(this.tempo, this.pixi.ticker.deltaMS) * this.tracker.horizontalRatio
     const hitPosition = -this.song.position + this.pixi.screen.height;
     for (let i = this.song.notes.length - 1; i >= 0; i -= 1) {
       const note = this.song.notes[i];
