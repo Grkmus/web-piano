@@ -77,7 +77,6 @@ export default class Engine extends EventFactory {
     this.tempo = Number(tempo);
   }
   updateMode(mode) {
-    if (mode === 'playAlong') this.start()
     this.mode = mode
   }
   gameLoop() {
