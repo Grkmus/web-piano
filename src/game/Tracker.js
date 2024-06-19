@@ -18,6 +18,7 @@ export default class Tracker {
       this.generateCursor(),
       this.generateFrame()
     )
+    this.dragObjects = null
     this.enableListener()
     this.isDragging = false;
     return this
@@ -68,7 +69,7 @@ export default class Tracker {
   enableListener() {
     this.container.interactive = true
     this.container.cursor = 'pointer';
-    drag(this)
+    this.dragObjects = drag(this)
     this.container.on('pointertap', e => {
       if (this.isDragging) return
       const cursorPosition = e.getLocalPosition(this.container).x
@@ -79,7 +80,8 @@ export default class Tracker {
     })
   }
   reset() {
-    this.cursor.x = -this.pixi.screen.height * this.horizontalRatio
+    this.container.removeChild(...this.dragObjects)
+    this.container.alpha = 1
   }
 }
   

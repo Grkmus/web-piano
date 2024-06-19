@@ -33,6 +33,7 @@ export default class Song {
   }
   reset() {
     this.position = 0
+    this.tracker.reset()
   }
 
 }

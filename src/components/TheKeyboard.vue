@@ -59,6 +59,8 @@ export default {
     this.keyWidth = this.octaveWidth / 12;
 
     window.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowLeft') this.engine.value.stepBackward()
+      if (e.key === 'ArrowRight') this.engine.value.stepForward()
       if (!keyboardMapping[e.key]) return
       const { octave, pitch, midi } = keyboardMapping[e.key];
       if (keysToBePressed.has(midi)) {
