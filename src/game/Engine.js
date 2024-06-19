@@ -50,7 +50,7 @@ export default class Engine extends EventFactory {
   enableLooping(limits, callback) {
     console.log('enabling looping', limits)
     window.dispatchEvent(new CustomEvent('reset'));
-    this.song.container.y = limits.min;
+    this.song.position = limits.min;
     if (this.loopFunc) this.pixi.ticker.remove(this.loopFunc);
     this.loopFunc = () => this.loopInArea(limits, callback);
     this.pixi.ticker.add(this.loopFunc);
@@ -60,20 +60,20 @@ export default class Engine extends EventFactory {
     this.pixi.ticker.remove(this.loopFunc);
   }
   loopInArea(limits, callback) {
-    if (this.song.container.y >= limits.max) {
-      this.song.container.y = limits.min;
+    if (this.song.position >= limits.max) {
+      this.song.position = limits.min;
       callback()
       window.dispatchEvent(new CustomEvent('reset'));
     }
   }
   stepForward() {
     window.dispatchEvent(new CustomEvent('reset'));
-    this.song.container.y += 240;
+    this.song.position += 240;
     this.pixi.render()
   }
   stepBackward() {
     window.dispatchEvent(new CustomEvent('reset'));
-    this.song.container.y -= 240;
+    this.song.position -= 240;
     this.pixi.render()
   }
   tempoChange(tempo) {
@@ -84,9 +84,9 @@ export default class Engine extends EventFactory {
     this.mode = mode
   }
   gameLoop() {
-    this.song.container.y += bpm2px(this.tempo, this.pixi.ticker.deltaMS);
+    this.song.position += bpm2px(this.tempo, this.pixi.ticker.deltaMS);
     this.tracker.cursor.x += bpm2px(this.tempo, this.pixi.ticker.deltaMS) * this.tracker.horizontalRatio
-    const hitPosition = -this.song.container.y + this.pixi.screen.height;
+    const hitPosition = -this.song.position + this.pixi.screen.height;
     for (let i = this.song.notes.length - 1; i >= 0; i -= 1) {
       const note = this.song.notes[i];
       note.update(hitPosition);

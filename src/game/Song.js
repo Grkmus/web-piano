@@ -22,6 +22,12 @@ export default class Song {
     return this
   }
 
+  set position(val) {
+    this.container.y = val
+  }
+  get position() {
+    return this.container.y
+  }
   reset() {
     this.container.y = 0
   }
