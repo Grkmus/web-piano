@@ -1,4 +1,4 @@
-import { Text, Container, Graphics, FillGradient, GraphicsContext, Texture, Sprite } from 'pixi.js';
+import { Container} from 'pixi.js';
 import { bpm2px } from '../utils/helpers';
 import _ from 'lodash';
 import EventFactory from '@/game/EventFactory';
@@ -18,6 +18,7 @@ export default class Engine extends EventFactory {
       Engine.instance = this;
       this.loopFunc = null;
       this.pixi.ticker.add(() => this.gameLoop());
+      this.emitterContainer= new Container();
     }
     return Engine.instance;
   }
@@ -28,6 +29,7 @@ export default class Engine extends EventFactory {
     this.song = new Song(midi);
     this.pixi.stage.addChild(this.song.tracker.container);
     this.pixi.stage.addChild(this.song.container);
+    this.pixi.stage.addChild(this.emitterContainer);
     this.tempo = this.song.tempo;
     this.emit('tempoChange', Math.round(this.tempo))
     this.pixi.render()
