@@ -3,6 +3,7 @@ import { scaleSequential } from 'd3-scale';
 import { color } from 'd3-color';
 import { Sprite, Graphics, Texture} from 'pixi.js';
 import Engine from './Engine';
+import FireParticle from './FireParticle';
 const LOWEST_KEY = 24;
 const OCTAVE_AMOUNT = 7
 const colorScale = scaleSequential().domain([24, OCTAVE_AMOUNT * 12]).interpolator(interpolateMagma);
@@ -28,6 +29,10 @@ export default class Note extends Sprite {
     this.disabledColor = 0x8b95a6
     this.noteOnColor = 0x2f329f;
     this.tint = this.defaultColor
+    this.particle = new FireParticle(this.engine.emitterContainer, {pos: { x: this.x-this.w, y: this.pixi.screen.height }}, this.defaultColor)
+    this.particle.then(particle => {
+      particle.emit = false
+    })
   }
 
   update(hitPosition) {
@@ -65,6 +70,9 @@ export default class Note extends Sprite {
       window.dispatchEvent(event);
       this.isNoteOn = true;
     }
+    this.particle.then(particle => {
+      particle.emit=true
+    })
   }
 
   noteOff() {
@@ -75,6 +83,9 @@ export default class Note extends Sprite {
     });
     window.dispatchEvent(event);
     this.isNoteOn = false;
+    this.particle.then(particle => {
+      particle.emit = false
+    })
   }
 
   handEnableCheck() {

@@ -1,5 +1,5 @@
 <template lang="pug">
-div(v-bind:class='{ pressed: currentVelocity}' :style=`{"background-color": keyColor}`)
+div(v-bind:class='{ pressed: currentVelocity}' :style="currentVelocity ? styleObject : ''")
   //- span {{ note }}
 </template>
 
@@ -25,6 +25,12 @@ export default {
   computed: {
     keyColor() {
       return color(colorScale(this.midiNumber));
+    },
+    styleObject() {
+      return {
+        'background-color': this.keyColor,
+        'box-shadow': '0 5px #666'
+      }
     }
   },
 
