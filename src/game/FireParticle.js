@@ -2,16 +2,16 @@ import { Assets, Texture } from 'pixi.js';
 import * as particles from '@barvynkoa/particle-emitter'
 
 export default class FireParticle {
-  constructor(container, definitions) {
+  constructor(container, definitions, color) {
     return this.fetchAssets().then(() => {
-      return this.initialize(container, definitions)
+      return this.initialize(container, definitions, color)
     })
   }
   async fetchAssets() {
     this.fire = await Assets.load('/web-piano/Fire.png');
     this.particle = await Assets.load('/web-piano/particle.png');
   }
-  initialize(container, definitions) {
+  initialize(container, definitions, color) {
     const defaultDefinitions = {
       lifetime: {
         min: 0.1,
@@ -76,7 +76,7 @@ export default class FireParticle {
               list: [
                 {
                   time: 0,
-                  value: 'fff191'
+                  value: color
                 },
                 {
                   time: 1,

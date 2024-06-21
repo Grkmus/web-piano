@@ -29,7 +29,7 @@ export default class Note extends Sprite {
     this.disabledColor = 0x8b95a6
     this.noteOnColor = 0x2f329f;
     this.tint = this.defaultColor
-    this.particle = new FireParticle(this.engine.emitterContainer, {pos: { x: this.x-this.w, y: this.pixi.screen.height },})
+    this.particle = new FireParticle(this.engine.emitterContainer, {pos: { x: this.x-this.w, y: this.pixi.screen.height }}, this.defaultColor)
     this.particle.then(particle => {
       particle.emit = false
     })
