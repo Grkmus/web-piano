@@ -1,3 +1,5 @@
+# [CHECK OUT THE APP IN ACTION!](https://grkmus.github.io/web-piano/)
+
 # web-piano
 
 This template should help get you started developing with Vue 3 in Vite.
