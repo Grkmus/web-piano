@@ -11,7 +11,8 @@ export default async function initialize(view) {
     resizeTo: view
   });
   const engine = new Engine(app)
-  const midiFile = await readFile('MozartWolfgangAmadeus_AllaTurcaRondo.midi')
-  engine.placeSong(midiFile)
+  const fileName = 'MozartWolfgangAmadeus_AllaTurcaRondo.midi'
+  const midiFile = await readFile(fileName)
+  engine.placeSong(midiFile, fileName)
   return engine
 }

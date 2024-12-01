@@ -1,7 +1,7 @@
 <template lang='pug'>
 PanelTemplate(title="Player")
   template(v-slot)
-    p {{ selectedSong }}
+    p {{ engine.song.name }}
     .controls(v-if="checkPianoLoaded")
       button.control(:disabled="!checkPianoLoaded" @click='stepBackward')
         font-awesome-icon(icon='step-backward')

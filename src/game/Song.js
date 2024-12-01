@@ -6,10 +6,11 @@ import Tracker from './Tracker';
 
 export default class Song {
 
-  constructor(data) {
+  constructor(data, name) {
     const {durationTicks, tracks, header} = data
     this.durationTicks = durationTicks
     this.header = header
+    this.name = name
     this.tempo = header.tempos[0].bpm;
     this.tracks = tracks
     this.container = new Container();

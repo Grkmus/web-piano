@@ -22,11 +22,11 @@ export default class Engine extends EventFactory {
     }
     return Engine.instance;
   }
-  placeSong(midi) {
+  placeSong(midi, fileName) {
     console.log('placing the song')
     this.pause();
     this.pixi.stage.removeChildren();
-    this.song = new Song(midi);
+    this.song = new Song(midi, fileName);
     this.pixi.stage.addChild(this.song.tracker.container);
     this.pixi.stage.addChild(this.song.container);
     this.pixi.stage.addChild(this.emitterContainer);
