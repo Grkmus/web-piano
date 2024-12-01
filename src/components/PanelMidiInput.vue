@@ -19,8 +19,9 @@ export default {
   setup() {
     const availableInputs = ref(null)
     const selectedInput = ref(null)
+    const midiDevice = ref(null)
     return {
-      availableInputs, selectedInput,
+      availableInputs, selectedInput, midiDevice
     };
   },
   mounted() {
@@ -31,6 +32,30 @@ export default {
       this.selectedInput = this.availableInputs[0]; //eslint-disable-line
     });
   },
+  watch: {
+    midiDevice() {
+      this.midiDevice.addListener('noteon', 'all', (e) => {
+        const velocity = e.velocity
+        const { octave, name: pitch, number: midi } = e.note;
+        console.log('sending event', velocity)
+        const event = new CustomEvent('note-on', {
+          detail: { octave, pitch, midi, velocity },
+        });
+        window.dispatchEvent(event);
+      });
+      this.midiDevice.addListener('noteoff', 'all', (e) => {
+        const velocity = e.velocity
+        const { octave, name: pitch, number: midi } = e.note;
+        const event = new CustomEvent('note-off', {
+          detail: { octave, pitch, midi, velocity },
+        });
+        window.dispatchEvent(event);
+      });
+    },
+    selectedInput(newVal) {
+      this.midiDevice = WebMidi.getInputByName(newVal);
+    },
+  }
 };
 </script>
 

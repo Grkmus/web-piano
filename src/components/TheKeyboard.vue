@@ -49,12 +49,6 @@ export default {
     }
   },
   mounted() {
-    WebMidi.enable(() => {
-      console.log(WebMidi.inputs);
-      console.log(WebMidi.outputs);
-      this.availableInputs = WebMidi.inputs.map((input) => input.name);
-      this.selectedInput = this.availableInputs[0]; //eslint-disable-line
-    });
     this.octaveWidth = this.$refs.keyboard.offsetWidth / this.octaveAmount;
     this.keyWidth = this.octaveWidth / 12;
 
@@ -81,14 +75,19 @@ export default {
     });
 
     window.addEventListener('note-on', (e) => {
-      const { octave, pitch, midi } = e.detail;
-      piano.keyDown({ midi });
+      const { octave, pitch, midi, velocity } = e.detail;
+      if (keysToBePressed.has(midi)) {
+        keysToBePressed.delete(midi)
+        this.engine.value.keysBeingPressed.add(midi)
+        this.engine.value.start()
+      }
+      piano.keyDown({ midi, velocity });
       this.$refs.octaves[octave - 1].$refs[pitch].pressKey();
     });
 
     window.addEventListener('note-off', (e) => {
-      const { octave, pitch, midi } = e.detail;
-      piano.keyUp({ midi });
+      const { octave, pitch, midi, velocity } = e.detail;
+      piano.keyUp({ midi, velocity });
       this.$refs.octaves[octave - 1].$refs[pitch].releaseKey();
     });
   },

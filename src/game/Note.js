@@ -67,6 +67,7 @@ export default class Note extends Sprite {
       const event = new CustomEvent('note-on', {
         detail: { octave, pitch, midi },
       });
+      console.log(octave, pitch, midi)
       window.dispatchEvent(event);
       this.isNoteOn = true;
     }

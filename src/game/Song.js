@@ -34,6 +34,9 @@ export default class Song {
   reset() {
     this.position = 0
     this.tracker.reset()
+    this.notes.forEach(note => {
+      note.particle.then(particle => {particle.emit = false})
+    })
   }
 
 }
