@@ -45,7 +45,7 @@ export default {
         const reader = new FileReader();
         reader.onload = (e) => {
           const midi = new Midi(e.target.result);
-          this.engine.placeSong(midi);
+          this.engine.placeSong(midi, file.name);
         };
         reader.readAsArrayBuffer(file); // Use readAsText for text files, other methods for different file types
       }
@@ -96,7 +96,7 @@ export default {
   padding: 5px 10px;
   background-color: #444;
   color: white;
-  font-size: 0.8rem;
+  font-size: 1rem;
   border: none;
   border-radius: 5px;
   cursor: pointer;

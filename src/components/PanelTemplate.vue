@@ -36,7 +36,6 @@ export default {
 }
 
 .card-content {
-    font-size: 0.75em;
-    /* line-height: 1.5; */
+  font-size: 0.9rem;
 }
 </style>
