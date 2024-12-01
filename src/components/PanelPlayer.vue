@@ -1,6 +1,7 @@
 <template lang='pug'>
 PanelTemplate(title="Player")
   template(v-slot)
+    p {{ selectedSong }}
     .controls(v-if="checkPianoLoaded")
       button.control(:disabled="!checkPianoLoaded" @click='stepBackward')
         font-awesome-icon(icon='step-backward')
@@ -18,7 +19,6 @@ PanelTemplate(title="Player")
 
 <script>
 import { inject, ref } from 'vue';
-import { Midi } from '@tonejs/midi';
 import Piano from '@/game/Piano'
 import PanelTemplate from './PanelTemplate.vue';
 
@@ -65,20 +65,6 @@ export default {
     },
     stepBackward() {
       this.engine.stepBackward();
-    },
-    loadFile(event) {
-      console.log('loading the file');
-      this.isPlaying = false;
-      const file = event.target.files[0];
-      if (file) {
-        const reader = new FileReader();
-        reader.onload = (e) => {
-          const midi = new Midi(e.target.result);
-          this.engine.placeSong(midi);
-        };
-        // readAsArrayBuffer triggers the load event!
-        reader.readAsArrayBuffer(file); // Use readAsText for text files, other methods for different file types
-      }
     },
   },
 };
