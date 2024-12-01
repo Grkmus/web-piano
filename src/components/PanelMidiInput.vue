@@ -37,7 +37,6 @@ export default {
       this.midiDevice.addListener('noteon', 'all', (e) => {
         const velocity = e.velocity
         const { octave, name: pitch, number: midi } = e.note;
-        console.log('sending event', velocity)
         const event = new CustomEvent('note-on', {
           detail: { octave, pitch, midi, velocity },
         });
